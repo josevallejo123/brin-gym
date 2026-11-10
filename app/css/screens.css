@@ -1,0 +1,186 @@
+/* The screens around a workout: Home, Day, Variation, Finish, About, and the
+   screen shown if the workouts fail to load. */
+
+/* The top of an inner screen: one back control, top left. */
+.topbar {
+  display: flex;
+  align-items: center;
+  min-height: var(--tap-min);
+  margin-left: calc(var(--space-3) * -1);
+}
+
+.screen-title {
+  font-size: var(--title-size);
+  line-height: var(--leading-tight);
+  text-wrap: balance;
+}
+
+/* Home and Day: a title at the top, the choices low on the screen where a
+   thumb rests, and nothing in between. */
+/* Home has no back control, and its title sits where the titles of the
+   screens behind it sit, so nothing moves up or down on the way in. */
+.home-title {
+  margin-top: calc(var(--tap-min) + var(--space-5));
+}
+
+.day-title {
+  margin-top: var(--space-5);
+}
+
+.choices {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-top: auto;
+}
+
+.home .choices {
+  margin-bottom: var(--space-5);
+}
+
+.day .choices {
+  margin-bottom: var(--space-8);
+}
+
+/* The part of a screen that scrolls under its top bar: the exercise list on
+   Variation, the credits on About. Its scrolling does not drag the page. */
+.scroll-area {
+  flex: 1;
+  min-height: 0;
+  margin-inline: calc(var(--gutter) * -1);
+  padding: var(--space-5) var(--gutter) var(--space-6);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.scroll-area::-webkit-scrollbar {
+  display: none;
+}
+
+/* Variation: the six exercises in order, then Start pinned at the bottom. */
+.variation-day {
+  margin-top: var(--space-1);
+  color: var(--color-muted);
+}
+
+.group {
+  margin-top: var(--space-6);
+}
+
+.group-name {
+  color: var(--color-muted);
+  font-size: var(--type-16);
+  font-weight: var(--weight-regular);
+}
+
+.exercise-rows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin-top: var(--space-3);
+}
+
+.exercise-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.exercise-row .drawing {
+  flex: none;
+  width: var(--still-size);
+}
+
+.exercise-name {
+  font-size: var(--type-18);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-heading);
+}
+
+.exercise-sets {
+  margin-top: var(--space-1);
+  color: var(--color-muted);
+  font-size: var(--type-16);
+  line-height: var(--leading-heading);
+}
+
+.footer-actions {
+  display: flex;
+  gap: var(--space-3);
+  padding-top: var(--space-4);
+}
+
+/* The line above Start says the list carries on underneath it. */
+.variation .footer-actions {
+  margin-inline: calc(var(--gutter) * -1);
+  padding-inline: var(--gutter);
+  border-top: var(--hairline) solid var(--color-hairline);
+}
+
+/* A screen with one thing to say sets it in the middle: Finish, and the
+   screen shown when the workouts did not load. */
+.middle {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+/* Finish: the time, a flourish under it, a way home. */
+.finish-time {
+  font-size: var(--type-48);
+  line-height: var(--leading-tight);
+}
+
+.flourish {
+  width: var(--flourish-width);
+  margin-top: var(--space-4);
+  color: var(--color-accent);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: var(--flourish-stroke);
+  stroke-linecap: round;
+}
+
+.flourish path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: flourish-draw var(--duration-flourish) var(--ease-in-out) var(--delay-flourish) forwards;
+}
+
+@keyframes flourish-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* About and the load-failed screen: plain text. */
+.about-version {
+  margin-top: var(--space-2);
+  color: var(--color-muted);
+}
+
+.about-section {
+  margin-top: var(--space-6);
+}
+
+.credit {
+  margin-top: var(--space-3);
+}
+
+.credit-detail {
+  color: var(--color-muted);
+  font-size: var(--type-16);
+}
+
+.failed-detail {
+  margin-top: var(--space-3);
+  color: var(--color-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flourish path {
+    stroke-dashoffset: 0;
+    animation: none;
+  }
+}

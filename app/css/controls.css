@@ -1,0 +1,266 @@
+/* Everything she can tap, and the exercise drawings. */
+
+/* Buttons. The filled rose-gold one is the single main action of a screen.
+   Buttons that share a row split it evenly, unless one needs more room for
+   its words. */
+.button {
+  display: flex;
+  flex: 1 1 0;
+  align-items: center;
+  justify-content: center;
+  min-width: min-content;
+  min-height: var(--control-height-quiet);
+  padding-inline: var(--space-4);
+  border-radius: var(--radius-pill);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  font-size: var(--type-18);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-tight);
+  white-space: nowrap;
+  transition: transform var(--duration-press) var(--ease-out);
+}
+
+.button:active {
+  background-color: var(--color-surface-pressed);
+  transform: scale(var(--press-scale));
+}
+
+.button-main {
+  min-height: var(--control-height);
+  background-color: var(--color-accent);
+  color: var(--color-on-accent);
+  font-size: var(--type-21);
+}
+
+.button-main:active {
+  background-color: var(--color-accent-pressed);
+}
+
+/* Icon buttons: no face at rest, a quiet disc while pressed. */
+.icon-button {
+  display: grid;
+  place-items: center;
+  width: var(--tap-min);
+  height: var(--tap-min);
+  border-radius: var(--radius-pill);
+  color: var(--color-text);
+  transition: transform var(--duration-press) var(--ease-out);
+}
+
+.icon-button:active {
+  background-color: var(--color-surface);
+  transform: scale(var(--press-scale));
+}
+
+.icon-button[disabled] {
+  display: none;
+}
+
+.icon {
+  width: var(--icon-size);
+  height: var(--icon-size);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: var(--icon-stroke);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* A row of the Home and Day lists: a name, large, the whole width tappable. */
+.choice {
+  display: flex;
+  align-items: center;
+  min-height: var(--control-height);
+  margin-inline: calc(var(--space-3) * -1);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-row);
+  font-size: var(--choice-size);
+  line-height: var(--leading-heading);
+  text-wrap: balance;
+}
+
+.choice:active {
+  background-color: var(--color-surface);
+}
+
+/* A text link that stays out of the way. */
+.quiet-link {
+  display: inline-flex;
+  align-items: center;
+  min-width: var(--tap-min);
+  min-height: var(--tap-min);
+  color: var(--color-muted);
+  font-size: var(--type-16);
+}
+
+.quiet-link:active {
+  color: var(--color-text);
+}
+
+.text-link {
+  text-decoration: underline;
+  text-decoration-color: var(--color-muted);
+  text-decoration-thickness: var(--hairline);
+  text-underline-offset: var(--space-1);
+}
+
+.text-link:active {
+  color: var(--color-accent);
+}
+
+/* The End workout sheet: the one layer that sits over a screen. */
+.sheet {
+  width: 100%;
+  max-width: var(--content-max);
+  margin: auto auto 0;
+  padding: var(--space-6) calc(env(safe-area-inset-right) + var(--gutter))
+    calc(env(safe-area-inset-bottom) + var(--space-5)) calc(env(safe-area-inset-left) + var(--gutter));
+  border: 0;
+  border-radius: var(--radius-sheet) var(--radius-sheet) 0 0;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+.sheet[open] {
+  animation: sheet-in var(--duration-screen) var(--ease-out) both;
+}
+
+.sheet::backdrop {
+  background-color: var(--color-scrim);
+}
+
+.sheet-title {
+  font-size: var(--type-30);
+  line-height: var(--leading-heading);
+  text-wrap: balance;
+}
+
+/* Opening the sheet puts focus on its question, which needs no ring. */
+.sheet-title:focus-visible {
+  outline: none;
+}
+
+.sheet-detail {
+  margin-top: var(--space-2);
+  color: var(--color-muted);
+}
+
+.sheet-actions {
+  display: flex;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+}
+
+.sheet-actions .button {
+  font-size: var(--type-18);
+}
+
+@keyframes sheet-in {
+  from {
+    transform: translateY(100%);
+  }
+}
+
+/* An exercise drawing. Each frame is a colour-neutral SVG used as a mask, so
+   the lines take the colour set here. Frames are stacked and shown one at a
+   time: start, middle, finish, middle. */
+.drawing {
+  position: relative;
+  aspect-ratio: 1;
+  color: var(--color-drawing);
+}
+
+.drawing-frame {
+  position: absolute;
+  inset: 0;
+  background-color: currentColor;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+.drawing[data-loop] .drawing-frame {
+  opacity: 0;
+  animation-timing-function: step-end;
+  animation-iteration-count: infinite;
+}
+
+.drawing[data-loop="3"] .drawing-frame {
+  animation-duration: calc(var(--duration-loop-beat) * 4);
+}
+
+.drawing[data-loop="2"] .drawing-frame {
+  animation-duration: calc(var(--duration-loop-beat) * 2);
+}
+
+.drawing[data-loop="3"] [data-frame="1"] {
+  animation-name: loop-of-3-start;
+}
+
+.drawing[data-loop="3"] [data-frame="2"] {
+  animation-name: loop-of-3-middle;
+}
+
+.drawing[data-loop="3"] [data-frame="3"] {
+  animation-name: loop-of-3-finish;
+}
+
+.drawing[data-loop="2"] [data-frame="1"] {
+  animation-name: loop-of-2-start;
+}
+
+.drawing[data-loop="2"] [data-frame="2"] {
+  animation-name: loop-of-2-finish;
+}
+
+@keyframes loop-of-3-start {
+  0% { opacity: 1; }
+  25% { opacity: 0; }
+}
+
+@keyframes loop-of-3-middle {
+  0% { opacity: 0; }
+  25% { opacity: 1; }
+  50% { opacity: 0; }
+  75% { opacity: 1; }
+}
+
+@keyframes loop-of-3-finish {
+  0% { opacity: 0; }
+  50% { opacity: 1; }
+  75% { opacity: 0; }
+}
+
+@keyframes loop-of-2-start {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes loop-of-2-finish {
+  0% { opacity: 0; }
+  50% { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button,
+  .icon-button {
+    transition: none;
+  }
+
+  .sheet[open] {
+    animation: none;
+  }
+
+  /* A still instead of the loop: only the frame marked as the still shows. */
+  .drawing[data-loop] .drawing-frame {
+    animation: none;
+  }
+
+  .drawing[data-loop] .drawing-frame[data-still] {
+    opacity: 1;
+  }
+}

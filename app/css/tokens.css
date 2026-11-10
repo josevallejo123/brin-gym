@@ -1,0 +1,122 @@
+/* Every colour, size and duration in the app is named here. Other stylesheets
+   use these names and never a raw value (tests/logic/tokens.test.mjs checks).
+   tools/app/render-icons.mjs reads --color-bg and --color-accent from this
+   file, so the Home Screen icon always matches the palette. */
+
+:root {
+  /* Colour: plum noir, one rose-gold accent, warm off-white text. */
+  --color-bg: #1d141a;
+  --color-surface: #2b1f27;
+  --color-surface-pressed: #38282f;
+  --color-hairline: #46323d;
+  --color-text: #f4e8e3;
+  --color-muted: #b99da4;
+  --color-accent: #dba898;
+  --color-accent-pressed: #e9c0b3;
+  --color-on-accent: #2a1a1f;
+  --color-drawing: #eadad5;
+  --color-scrim: rgb(13 8 11 / 0.66);
+
+  /* Type: Bodoni Moda for headings and every number that counts time or
+     reps, Jost for the rest. Sizes follow the classic typographic scale. */
+  --font-serif: "Bodoni Moda", "Didot", "Bodoni 72", serif;
+  --font-sans: "Jost", "Futura", "Avenir Next", sans-serif;
+
+  --type-16: 1rem;
+  --type-18: 1.125rem;
+  --type-21: 1.3125rem;
+  --type-24: 1.5rem;
+  --type-30: 1.875rem;
+  --type-36: 2.25rem;
+  --type-48: 3rem;
+  --type-60: 3.75rem;
+  --type-72: 4.5rem;
+  --type-96: 6rem;
+  --type-120: 7.5rem;
+  --type-144: 9rem;
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --leading-numerals: 1;
+  --leading-tight: 1.08;
+  --leading-heading: 1.15;
+  --leading-body: 1.45;
+  --tracking-heading: -0.01em;
+  --tracking-numerals: -0.02em;
+  /* The width of one digit of a running timer, so times never shift. */
+  --digit-width: 0.62em;
+
+  /* Space: one scale, used for every gap, inset and margin. */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+
+  --gutter: var(--space-5);
+  --content-max: 30rem;
+
+  /* Controls */
+  --tap-min: 2.75rem;
+  --control-height: 3.75rem;
+  --control-height-quiet: 3.25rem;
+  --radius-pill: 999px;
+  --radius-sheet: 1.75rem;
+  --radius-row: 1rem;
+  --radius-focus: 0.5rem;
+  --hairline: 1px;
+  --progress-height: 2px;
+  --focus-ring: 2px;
+  --icon-size: 1.5rem;
+  --icon-stroke: 1.75;
+  --press-scale: 0.97;
+  /* How far the stage dims while paused. Muted text must still read through
+     it (tests/logic/tokens.test.mjs works the contrast out). */
+  --dim-opacity: 0.75;
+  --flourish-width: 9rem;
+  --flourish-stroke: 1.5;
+
+  /* Drawings */
+  --still-size: 4rem;
+  --next-drawing-size: 10rem;
+  --player-drawing-min: 9rem;
+
+  /* Motion: short and calm. Nothing bounces. */
+  --ease-out: cubic-bezier(0.2, 0, 0, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-press: 90ms;
+  --duration-quick: 160ms;
+  --duration-screen: 240ms;
+  --duration-progress: 250ms;
+  --duration-flourish: 1100ms;
+  --delay-flourish: 200ms;
+  --duration-loop-beat: 850ms;
+  --delay-note-fade: 8s;
+  --screen-shift: 0.5rem;
+
+  /* Sizes that depend on how tall the phone is. */
+  --title-size: var(--type-48);
+  --choice-size: var(--type-30);
+  --player-name-size: var(--type-36);
+  --player-reps-size: var(--type-120);
+  --countdown-size: var(--type-144);
+  --next-reps-size: var(--type-48);
+  --stage-gap: var(--space-5);
+}
+
+/* Short phones (iPhone SE, 667 px tall): the same scale, one step down. */
+@media (max-height: 700px) {
+  :root {
+    --title-size: var(--type-36);
+    --player-name-size: var(--type-30);
+    --player-reps-size: var(--type-96);
+    --countdown-size: var(--type-120);
+    --next-reps-size: var(--type-36);
+    --stage-gap: var(--space-4);
+    --next-drawing-size: 6.5rem;
+  }
+}

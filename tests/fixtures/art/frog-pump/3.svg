@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <path fill-rule="evenodd" d="M342 214a30 30 0 1 0 60 0a30 30 0 1 0 -60 0zM354 214a18 18 0 1 0 36 0a18 18 0 1 0 -36 0z" fill="currentColor"/>
+  <rect x="320" y="226" width="129.2" height="12" rx="6" transform="rotate(152.6 326 232)" fill="currentColor"/>
+  <rect x="320" y="226" width="80.1" height="12" rx="6" transform="rotate(86.6 326 232)" fill="currentColor"/>
+  <rect x="324" y="294" width="74.1" height="12" rx="6" transform="rotate(86.3 330 300)" fill="currentColor"/>
+  <rect x="216" y="280" width="96.9" height="12" rx="6" transform="rotate(75.0 222 286)" fill="currentColor"/>
+  <rect x="238" y="362" width="90.9" height="12" rx="6" transform="rotate(81.3 244 368)" fill="currentColor"/>
+  <rect x="250" y="440" width="46.0" height="12" rx="6" transform="rotate(0.0 256 446)" fill="currentColor"/>
+  <rect x="117" y="449" width="278.0" height="6" rx="3" transform="rotate(0.0 120 452)" fill="currentColor"/>
+</svg>

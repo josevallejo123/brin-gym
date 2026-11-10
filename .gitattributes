@@ -1,0 +1,5 @@
+# One set of bytes everywhere: the build value in app/sw.js is a hash of the
+# app's files, so a checkout must not change their line endings.
+* text=auto eol=lf
+*.png binary
+*.woff2 binary

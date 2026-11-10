@@ -1,0 +1,24 @@
+{
+  "name": "brin-gym",
+  "private": true,
+  "description": "A workout web app for one iPhone Home Screen.",
+  "type": "module",
+  "scripts": {
+    "check": "node tools/content/check-workouts.mjs",
+    "test": "npm run test:logic && npm run test:browser",
+    "test:logic": "node --test \"tests/logic/*.test.mjs\"",
+    "test:browser": "playwright test --config tests/playwright.config.mjs",
+    "test:browser:real": "playwright test --config tests/real.config.mjs",
+    "test:browser:published": "playwright test --config tests/published.config.mjs",
+    "test:live": "playwright test --config tests/live.config.mjs",
+    "serve": "node tools/app/serve.mjs",
+    "serve:fixtures": "node tools/app/serve.mjs --fixtures",
+    "offline-list": "node tools/app/offline-list.mjs",
+    "icons": "node tools/app/render-icons.mjs",
+    "screens": "playwright test --config tests/screens.config.mjs",
+    "publish": "node tools/publish.mjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.0"
+  }
+}

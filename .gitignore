@@ -1,0 +1,31 @@
+# Local only: these never go to the public repository.
+reference/
+BRIEF.md
+PROMPTS*
+handoffs/
+INSTALL.md
+.claude/
+
+# The app has no photos or video. Anything of that kind here is personal.
+# (The app's own icons and launch images are PNG, the only image type allowed.)
+*.jpg
+*.jpeg
+*.heic
+*.heif
+*.webp
+*.gif
+*.tif
+*.tiff
+*.dng
+*.mov
+*.mp4
+*.m4v
+*.avi
+
+# Tooling
+node_modules/
+test-results/
+playwright-report/
+*.log
+.DS_Store
+Thumbs.db
