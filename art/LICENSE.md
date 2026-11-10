@@ -8,7 +8,7 @@ This licence covers the artwork in this folder only. It is separate from the app
 
 The exercise drawings are adapted from two open sets, both CC BY-SA 4.0:
 
-- **Workout Guide** by Bryl Lim, https://github.com/bryllim/workout-guide, at commit `aac599224bb9780305239607ef98540b7e0ce389`. It supplies 44 of the 46 exercises. Workout Guide builds on Everkinetic's artwork.
+- **Workout Guide** by Bryl Lim, https://github.com/bryllim/workout-guide, at commit `aac599224bb9780305239607ef98540b7e0ce389`. It supplies 42 of the 44 exercises. Workout Guide builds on Everkinetic's artwork.
 - **Everkinetic**, created by Greg Priday and continued as the Everkinetic open data project, https://github.com/everkinetic/data, at commit `446bb9a3d0c3beb6b84f7c9d77dfc8af707a2ab6`. It supplies two exercises directly: the dumbbell upright row and the dumbbell walking lunge.
 
 ## What was changed

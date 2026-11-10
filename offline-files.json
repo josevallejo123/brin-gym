@@ -1,5 +1,5 @@
 {
-  "build": "1d468b5dc97b",
+  "build": "f27c243fa0e5",
   "files": [
     "art/LICENSE.md",
     "art/app-icon.svg",
@@ -88,8 +88,6 @@
     "art/plate-around-the-world/1.svg",
     "art/plate-around-the-world/2.svg",
     "art/plate-around-the-world/3.svg",
-    "art/prone-y-raise/1.svg",
-    "art/prone-y-raise/2.svg",
     "art/rope-triceps-pushdown/1.svg",
     "art/rope-triceps-pushdown/2.svg",
     "art/seated-cable-row/1.svg",
@@ -107,8 +105,6 @@
     "art/straight-arm-pulldown/1.svg",
     "art/straight-arm-pulldown/2.svg",
     "art/straight-arm-pulldown/3.svg",
-    "art/superman/1.svg",
-    "art/superman/2.svg",
     "art/wide-grip-lat-pulldown/1.svg",
     "art/wide-grip-lat-pulldown/2.svg",
     "css/base.css",
@@ -140,6 +136,7 @@
     "js/ui/copy.js",
     "js/ui/dom.js",
     "js/ui/drawing.js",
+    "js/ui/handover.js",
     "js/ui/routes.js",
     "js/ui/screens/lists.js",
     "js/ui/screens/plain.js",

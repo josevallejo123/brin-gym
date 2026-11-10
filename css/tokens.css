@@ -9,6 +9,9 @@
   --color-surface: #2b1f27;
   --color-surface-pressed: #38282f;
   --color-hairline: #46323d;
+  /* The outline of a box she can choose: a step lighter than a hairline, so
+     the box reads as a box on a dim screen. */
+  --color-box-line: #5d4752;
   --color-text: #f4e8e3;
   --color-muted: #b99da4;
   --color-accent: #dba898;
@@ -64,6 +67,7 @@
   --tap-min: 2.75rem;
   --control-height: 3.75rem;
   --control-height-quiet: 3.25rem;
+  --choice-height: 4.5rem;
   --radius-pill: 999px;
   --radius-sheet: 1.75rem;
   --radius-row: 1rem;
@@ -74,6 +78,8 @@
   --icon-size: 1.5rem;
   --icon-stroke: 1.75;
   --press-scale: 0.97;
+  /* How far the box she chose opens towards her as its screen leaves. */
+  --open-scale: 1.03;
   /* How far the stage dims while paused. Muted text must still read through
      it (tests/logic/tokens.test.mjs works the contrast out). */
   --dim-opacity: 0.75;
@@ -91,6 +97,21 @@
   --duration-press: 90ms;
   --duration-quick: 160ms;
   --duration-screen: 240ms;
+  /* A change of screen in which a name travels: the old screen fades out,
+     the name fades in on its way, and the parts of the new screen step in a
+     beat apart. The last part lands 300 ms after the tap. */
+  --duration-leave: 120ms;
+  --duration-name-fade: 60ms;
+  --duration-step: 180ms;
+  --delay-step: 30ms;
+  --step-shift: 0.75rem;
+  /* Which beat a part steps in on, and where the other end of a travelling
+     name's journey is. Set for each part and each journey (base.css,
+     js/ui/handover.js). */
+  --step: 0;
+  --travel-x: 0;
+  --travel-y: 0;
+  --travel-scale: 1;
   --duration-progress: 250ms;
   --duration-flourish: 1100ms;
   --delay-flourish: 200ms;
@@ -118,5 +139,6 @@
     --next-reps-size: var(--type-36);
     --stage-gap: var(--space-4);
     --next-drawing-size: 6.5rem;
+    --choice-height: 4rem;
   }
 }

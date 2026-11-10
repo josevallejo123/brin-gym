@@ -53,9 +53,7 @@
     "one-arm-dumbbell-row": { "name": "One-arm dumbbell row", "frames": 3, "still": 3 },
     "bent-over-dumbbell-row": { "name": "Bent-over dumbbell row", "frames": 3, "still": 3 },
     "landmine-one-arm-row": { "name": "Landmine one-arm row", "frames": 2, "still": 2 },
-    "bent-over-rear-delt-raise": { "name": "Bent-over rear delt raise", "frames": 2, "still": 2 },
-    "prone-y-raise": { "name": "Prone Y raise", "frames": 2, "still": 2 },
-    "superman": { "name": "Superman", "frames": 2, "still": 2 }
+    "bent-over-rear-delt-raise": { "name": "Bent-over rear delt raise", "frames": 2, "still": 2 }
   },
   "days": [
     {
@@ -218,7 +216,7 @@
             { "exercise": "seated-cable-row", "reps": 12 },
             { "exercise": "bent-over-rear-delt-raise", "reps": 12 }
           ],
-          "finisher": { "exercise": "superman", "reps": 15 }
+          "finisher": { "exercise": "cable-face-pull", "reps": 15 }
         },
         {
           "id": "cable-row",
@@ -240,7 +238,7 @@
           "main": { "exercise": "bent-over-dumbbell-row", "reps": 10 },
           "supersetA": [
             { "exercise": "wide-grip-lat-pulldown", "reps": 12 },
-            { "exercise": "prone-y-raise", "reps": 12 }
+            { "exercise": "straight-arm-pulldown", "reps": 12 }
           ],
           "supersetB": [
             { "exercise": "seated-cable-row", "reps": 12 },

@@ -67,21 +67,86 @@
   stroke-linejoin: round;
 }
 
-/* A row of the Home and Day lists: a name, large, the whole width tappable. */
+/* A box of the Home and Day lists: a name, large, the whole box tappable.
+   The box's face is drawn behind its words, so the name can move on its own
+   when it travels to or from a screen's title (js/ui/handover.js). */
 .choice {
+  position: relative;
+  isolation: isolate;
   display: flex;
   align-items: center;
-  min-height: var(--control-height);
-  margin-inline: calc(var(--space-3) * -1);
-  padding: var(--space-2) var(--space-3);
-  border-radius: var(--radius-row);
+  min-height: var(--choice-height);
+  padding: var(--space-3) var(--space-5);
   font-size: var(--choice-size);
-  line-height: var(--leading-heading);
-  text-wrap: balance;
+  /* The same leading as a screen's title, so a name sits the same way in
+     both and its two copies lie exactly over each other as it travels. */
+  line-height: var(--leading-tight);
+  transition: transform var(--duration-press) var(--ease-out);
+}
+
+.choice::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border: var(--hairline) solid var(--color-box-line);
+  border-radius: var(--radius-row);
+  background-color: var(--color-surface);
+}
+
+.choice:focus-visible {
+  border-radius: var(--radius-row);
 }
 
 .choice:active {
-  background-color: var(--color-surface);
+  transform: scale(var(--press-scale));
+}
+
+/* Pressed, and for the moment after she lets go while its screen leaves, the
+   box she chose has a rose-gold rim. */
+.choice:active::before,
+.leaving .chosen::before {
+  border-color: var(--color-accent);
+  background-color: var(--color-surface-pressed);
+}
+
+.choice-name {
+  display: inline-block;
+  text-wrap: balance;
+}
+
+/* As a screen leaves, the box she chose opens towards her and the others
+   fall back. Only the face of her box grows: its name is on its way to the
+   next screen and must not be pushed off course. */
+.leaving .choice:not(.chosen) {
+  animation: fall-back var(--duration-leave) var(--ease-in-out) both;
+}
+
+.leaving .chosen::before {
+  animation: open var(--duration-leave) var(--ease-in-out) both;
+}
+
+/* A box whose name is travelling back to it: the name is already on its way,
+   and the rest of the box fades in around where it will land. */
+.steps-in .choice.receives {
+  animation: none;
+}
+
+.steps-in .receives::before,
+.steps-in .receives .choice-lead {
+  animation: fade-in var(--duration-screen) var(--ease-out) both;
+}
+
+@keyframes fall-back {
+  to {
+    transform: scale(var(--press-scale));
+  }
+}
+
+@keyframes open {
+  to {
+    transform: scale(var(--open-scale));
+  }
 }
 
 /* A text link that stays out of the way. */
@@ -247,7 +312,8 @@
 
 @media (prefers-reduced-motion: reduce) {
   .button,
-  .icon-button {
+  .icon-button,
+  .choice {
     transition: none;
   }
 

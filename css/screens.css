@@ -15,8 +15,8 @@
   text-wrap: balance;
 }
 
-/* Home and Day: a title at the top, the choices low on the screen where a
-   thumb rests, and nothing in between. */
+/* Home and Day: a title at the top, the boxes to choose from low on the
+   screen where a thumb rests, and nothing in between. */
 /* Home has no back control, and its title sits where the titles of the
    screens behind it sit, so nothing moves up or down on the way in. */
 .home-title {
@@ -30,7 +30,7 @@
 .choices {
   display: flex;
   flex-direction: column;
-  gap: var(--space-1);
+  gap: var(--space-3);
   margin-top: auto;
 }
 
