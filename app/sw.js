@@ -7,7 +7,7 @@
 // progress (js/platform/updates.js).
 
 // Stamped by tools/app/offline-list.mjs with a hash of every file in the app.
-const BUILD = "ffff413f35a4";
+const BUILD = "1d468b5dc97b";
 
 const CACHE_PREFIX = "brin-gym-";
 const CACHE = `${CACHE_PREFIX}${BUILD}`;
