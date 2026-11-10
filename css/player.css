@@ -1,0 +1,224 @@
+/* The player: one set at a time, and the rest between sets. Type here is
+   sized to be read with the phone propped a couple of metres away. */
+
+.player-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: var(--tap-min);
+}
+
+.total {
+  font-size: var(--type-24);
+  line-height: var(--leading-tight);
+  white-space: nowrap;
+}
+
+.player-tools {
+  display: flex;
+  gap: var(--space-1);
+  margin-right: calc(var(--space-3) * -1);
+}
+
+/* A thin line: how far through the 30 minutes, and how far through a rest. */
+.progress {
+  height: var(--progress-height);
+  overflow: hidden;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-hairline);
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: var(--color-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--duration-progress) linear;
+}
+
+.total-progress {
+  margin-top: var(--space-2);
+}
+
+/* The stage takes the height the bar and the buttons leave, and never less
+   than its content needs. */
+.stage {
+  display: flex;
+  flex: 1 0 auto;
+  flex-direction: column;
+  padding-top: var(--stage-gap);
+  transition: opacity var(--duration-quick) var(--ease-out);
+}
+
+.stage-content {
+  display: flex;
+  flex: 1 0 auto;
+  flex-direction: column;
+  /* A new step arrives the way a new screen does (base.css). */
+  animation: screen-in var(--duration-screen) var(--ease-out) both;
+}
+
+.player[data-paused] .stage {
+  opacity: var(--dim-opacity);
+}
+
+.player[data-paused] .drawing-frame {
+  animation-play-state: paused;
+}
+
+/* While paused there is one way on, Resume, so the pause control steps aside. */
+.player[data-paused] .pause-tool {
+  visibility: hidden;
+}
+
+/* A set: the drawing takes whatever height is left over. */
+.set-drawing {
+  flex: 1 1 0;
+  min-height: var(--player-drawing-min);
+  aspect-ratio: auto;
+}
+
+/* The player's drawings sit on the left margin, with the words under them. */
+.set-drawing .drawing-frame,
+.next .drawing-frame {
+  -webkit-mask-position: left center;
+  mask-position: left center;
+}
+
+.set-name {
+  margin-top: var(--stage-gap);
+  font-size: var(--player-name-size);
+  line-height: var(--leading-tight);
+  text-wrap: balance;
+}
+
+/* Which set this is has to carry across the room too: "Warm-up set" is her
+   only cue to go lighter. */
+.set-label {
+  margin-top: var(--space-2);
+  font-size: var(--type-24);
+  line-height: var(--leading-heading);
+}
+
+.set-note {
+  margin-top: var(--space-1);
+  color: var(--color-muted);
+  font-size: var(--type-18);
+  animation: note-out var(--duration-screen) var(--ease-out) var(--delay-note-fade) forwards;
+}
+
+@keyframes note-out {
+  to {
+    opacity: 0;
+  }
+}
+
+.reps {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+.reps-count {
+  font-size: var(--player-reps-size);
+  line-height: var(--leading-numerals);
+}
+
+.reps-each {
+  font-size: var(--type-30);
+  line-height: var(--leading-heading);
+}
+
+/* A rest: the countdown at the top, what comes next at the bottom. */
+.rest-kind {
+  font-size: var(--type-24);
+  line-height: var(--leading-heading);
+}
+
+.countdown {
+  font-size: var(--countdown-size);
+  line-height: var(--leading-numerals);
+  white-space: nowrap;
+}
+
+.rest-progress {
+  margin-top: var(--space-4);
+}
+
+.next {
+  margin-top: auto;
+}
+
+.next-word {
+  color: var(--color-muted);
+  font-size: var(--type-18);
+}
+
+.next .drawing {
+  width: var(--next-drawing-size);
+  margin-top: var(--space-2);
+}
+
+/* The name is the size it will be on the set that follows. */
+.next-name {
+  margin-top: var(--space-3);
+  font-size: var(--player-name-size);
+  line-height: var(--leading-tight);
+  text-wrap: balance;
+}
+
+.next-label {
+  margin-top: var(--space-2);
+  color: var(--color-muted);
+  font-size: var(--type-21);
+  line-height: var(--leading-heading);
+}
+
+.next-reps {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin-top: var(--space-1);
+}
+
+.next-reps .reps-count {
+  font-size: var(--next-reps-size);
+}
+
+.next-reps .reps-each {
+  font-size: var(--type-21);
+}
+
+/* The bottom row, in thumb reach. It is as tall as its tallest button
+   whatever it holds, so nothing above it moves when the buttons change. */
+.player-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: calc(var(--control-height) + var(--stage-gap));
+  padding-top: var(--stage-gap);
+}
+
+/* The stage only dims a little, so this word is what says it is paused. */
+.paused-word {
+  flex: none;
+  min-width: var(--tap-min);
+  font-size: var(--type-21);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage,
+  .progress-fill {
+    transition: none;
+  }
+
+  .stage-content {
+    animation: none;
+  }
+
+  /* The note still leaves after its time, at once instead of fading. */
+  .set-note {
+    animation-timing-function: step-end;
+  }
+}

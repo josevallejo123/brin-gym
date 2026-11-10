@@ -1,0 +1,254 @@
+{
+  "rests": {
+    "betweenSetsSeconds": 60,
+    "afterSupersetRoundSeconds": 60,
+    "supersetSwitchSeconds": 10,
+    "beforeBlockSeconds": 90,
+    "addRestSeconds": 15
+  },
+  "sets": { "warmupSets": 1, "mainSets": 3, "supersetRounds": 3, "finisherSets": 3 },
+  "targetSeconds": 1800,
+  "estimateSecondsPerRep": 3,
+  "exercises": {
+    "barbell-hip-thrust": { "name": "Barbell hip thrust", "frames": 3, "still": 3 },
+    "dumbbell-hip-thrust": { "name": "Dumbbell hip thrust", "frames": 2, "still": 2 },
+    "dumbbell-romanian-deadlift": { "name": "Dumbbell Romanian deadlift", "frames": 2, "still": 2 },
+    "single-leg-romanian-deadlift": { "name": "Single-leg Romanian deadlift", "frames": 3, "still": 3 },
+    "dumbbell-curtsy-lunge": { "name": "Dumbbell curtsy lunge", "frames": 3, "still": 3 },
+    "dumbbell-reverse-lunge": { "name": "Dumbbell reverse lunge", "frames": 2, "still": 2 },
+    "dumbbell-sumo-squat": { "name": "Dumbbell sumo squat", "frames": 2, "still": 2 },
+    "step-up-onto-bench": { "name": "Step-up onto bench", "frames": 2, "still": 1 },
+    "cable-kickback": { "name": "Cable kickback", "frames": 2, "still": 2 },
+    "cable-pull-through": { "name": "Cable pull-through", "frames": 2, "still": 1 },
+    "cable-hip-abduction": { "name": "Cable hip abduction", "frames": 2, "still": 2 },
+    "banded-lateral-walk": { "name": "Banded lateral walk", "frames": 3, "still": 3 },
+    "banded-clamshell": { "name": "Banded clamshell", "frames": 3, "still": 3 },
+    "banded-glute-bridge": { "name": "Banded glute bridge", "frames": 2, "still": 2 },
+    "single-leg-glute-bridge": { "name": "Single-leg glute bridge", "frames": 2, "still": 2 },
+    "frog-pump": { "name": "Frog pump", "frames": 2, "still": 1 },
+    "landmine-squat": { "name": "Landmine squat", "frames": 2, "still": 2 },
+    "goblet-squat": { "name": "Goblet squat", "frames": 3, "still": 3 },
+    "heel-elevated-goblet-squat": { "name": "Heel-elevated goblet squat", "frames": 3, "still": 3 },
+    "dumbbell-split-squat": { "name": "Dumbbell split squat", "frames": 3, "still": 3 },
+    "dumbbell-walking-lunge": { "name": "Dumbbell walking lunge", "frames": 2, "still": 2 },
+    "dumbbell-lateral-lunge": { "name": "Dumbbell lateral lunge", "frames": 2, "still": 2 },
+    "leg-extension": { "name": "Leg extension", "frames": 3, "still": 3 },
+    "calf-raise": { "name": "Calf raise", "frames": 2, "still": 2 },
+    "seated-dumbbell-shoulder-press": { "name": "Seated dumbbell shoulder press", "frames": 2, "still": 2 },
+    "arnold-press": { "name": "Arnold press", "frames": 2, "still": 1 },
+    "landmine-press": { "name": "Landmine press", "frames": 2, "still": 2 },
+    "dumbbell-lateral-raise": { "name": "Dumbbell lateral raise", "frames": 2, "still": 2 },
+    "dumbbell-upright-row": { "name": "Dumbbell upright row", "frames": 2, "still": 2 },
+    "plate-around-the-world": { "name": "Plate around the world", "frames": 3, "still": 3 },
+    "cable-face-pull": { "name": "Cable face pull", "frames": 2, "still": 2 },
+    "rope-triceps-pushdown": { "name": "Rope triceps pushdown", "frames": 2, "still": 2 },
+    "overhead-rope-triceps-extension": { "name": "Overhead rope triceps extension", "frames": 2, "still": 1 },
+    "overhead-dumbbell-triceps-extension": { "name": "Overhead dumbbell triceps extension", "frames": 2, "still": 1 },
+    "dumbbell-skull-crusher": { "name": "Dumbbell skull crusher", "frames": 2, "still": 1 },
+    "dumbbell-triceps-kickback": { "name": "Dumbbell triceps kickback", "frames": 3, "still": 3 },
+    "wide-grip-lat-pulldown": { "name": "Wide-grip lat pulldown", "frames": 2, "still": 1 },
+    "close-grip-lat-pulldown": { "name": "Close-grip lat pulldown", "frames": 2, "still": 2 },
+    "straight-arm-pulldown": { "name": "Straight-arm pulldown", "frames": 3, "still": 2 },
+    "seated-cable-row": { "name": "Seated cable row", "frames": 3, "still": 3 },
+    "one-arm-dumbbell-row": { "name": "One-arm dumbbell row", "frames": 3, "still": 3 },
+    "bent-over-dumbbell-row": { "name": "Bent-over dumbbell row", "frames": 3, "still": 3 },
+    "landmine-one-arm-row": { "name": "Landmine one-arm row", "frames": 2, "still": 2 },
+    "bent-over-rear-delt-raise": { "name": "Bent-over rear delt raise", "frames": 2, "still": 2 },
+    "prone-y-raise": { "name": "Prone Y raise", "frames": 2, "still": 2 },
+    "superman": { "name": "Superman", "frames": 2, "still": 2 }
+  },
+  "days": [
+    {
+      "id": "glutes",
+      "name": "Glutes",
+      "variations": [
+        {
+          "id": "hip-thrust",
+          "name": "Hip thrust",
+          "main": { "exercise": "barbell-hip-thrust", "reps": 10 },
+          "supersetA": [
+            { "exercise": "dumbbell-romanian-deadlift", "reps": 10 },
+            { "exercise": "dumbbell-curtsy-lunge", "reps": 10, "each": "side" }
+          ],
+          "supersetB": [
+            { "exercise": "cable-kickback", "reps": 12, "each": "side" },
+            { "exercise": "banded-lateral-walk", "reps": 12, "each": "way" }
+          ],
+          "finisher": { "exercise": "frog-pump", "reps": 15 }
+        },
+        {
+          "id": "sumo-squat",
+          "name": "Sumo squat",
+          "main": { "exercise": "dumbbell-sumo-squat", "reps": 10 },
+          "supersetA": [
+            { "exercise": "dumbbell-hip-thrust", "reps": 12 },
+            { "exercise": "single-leg-romanian-deadlift", "reps": 10, "each": "side" }
+          ],
+          "supersetB": [
+            { "exercise": "cable-pull-through", "reps": 12 },
+            { "exercise": "single-leg-glute-bridge", "reps": 10, "each": "side" }
+          ],
+          "finisher": { "exercise": "banded-clamshell", "reps": 15, "each": "side" }
+        },
+        {
+          "id": "deadlift",
+          "name": "Deadlift",
+          "main": { "exercise": "dumbbell-romanian-deadlift", "reps": 10 },
+          "supersetA": [
+            { "exercise": "dumbbell-reverse-lunge", "reps": 10, "each": "side" },
+            { "exercise": "dumbbell-hip-thrust", "reps": 12 }
+          ],
+          "supersetB": [
+            { "exercise": "cable-hip-abduction", "reps": 12, "each": "side" },
+            { "exercise": "step-up-onto-bench", "reps": 10, "each": "side" }
+          ],
+          "finisher": { "exercise": "banded-glute-bridge", "reps": 15 }
+        }
+      ]
+    },
+    {
+      "id": "legs",
+      "name": "Legs",
+      "variations": [
+        {
+          "id": "landmine-squat",
+          "name": "Landmine squat",
+          "main": { "exercise": "landmine-squat", "reps": 10 },
+          "supersetA": [
+            { "exercise": "leg-extension", "reps": 12 },
+            { "exercise": "dumbbell-romanian-deadlift", "reps": 10 }
+          ],
+          "supersetB": [
+            { "exercise": "dumbbell-reverse-lunge", "reps": 10, "each": "side" },
+            { "exercise": "calf-raise", "reps": 15 }
+          ],
+          "finisher": { "exercise": "heel-elevated-goblet-squat", "reps": 15 }
+        },
+        {
+          "id": "split-squat",
+          "name": "Split squat",
+          "main": { "exercise": "dumbbell-split-squat", "reps": 8, "each": "side" },
+          "supersetA": [
+            { "exercise": "landmine-squat", "reps": 12 },
+            { "exercise": "single-leg-romanian-deadlift", "reps": 10, "each": "side" }
+          ],
+          "supersetB": [
+            { "exercise": "leg-extension", "reps": 12 },
+            { "exercise": "dumbbell-lateral-lunge", "reps": 10, "each": "side" }
+          ],
+          "finisher": { "exercise": "dumbbell-sumo-squat", "reps": 15 }
+        },
+        {
+          "id": "goblet-squat",
+          "name": "Goblet squat",
+          "main": { "exercise": "goblet-squat", "reps": 10 },
+          "supersetA": [
+            { "exercise": "leg-extension", "reps": 12 },
+            { "exercise": "dumbbell-walking-lunge", "reps": 10, "each": "side" }
+          ],
+          "supersetB": [
+            { "exercise": "landmine-squat", "reps": 12 },
+            { "exercise": "dumbbell-romanian-deadlift", "reps": 10 }
+          ],
+          "finisher": { "exercise": "step-up-onto-bench", "reps": 10, "each": "side" }
+        }
+      ]
+    },
+    {
+      "id": "shoulders-and-triceps",
+      "name": "Shoulders and triceps",
+      "variations": [
+        {
+          "id": "shoulder-press",
+          "name": "Shoulder press",
+          "main": { "exercise": "seated-dumbbell-shoulder-press", "reps": 10 },
+          "supersetA": [
+            { "exercise": "dumbbell-lateral-raise", "reps": 12 },
+            { "exercise": "rope-triceps-pushdown", "reps": 12 }
+          ],
+          "supersetB": [
+            { "exercise": "dumbbell-upright-row", "reps": 12 },
+            { "exercise": "overhead-dumbbell-triceps-extension", "reps": 12 }
+          ],
+          "finisher": { "exercise": "plate-around-the-world", "reps": 10, "each": "way" }
+        },
+        {
+          "id": "arnold-press",
+          "name": "Arnold press",
+          "main": { "exercise": "arnold-press", "reps": 10 },
+          "supersetA": [
+            { "exercise": "cable-face-pull", "reps": 12 },
+            { "exercise": "overhead-rope-triceps-extension", "reps": 12 }
+          ],
+          "supersetB": [
+            { "exercise": "dumbbell-lateral-raise", "reps": 12 },
+            { "exercise": "plate-around-the-world", "reps": 10, "each": "way" }
+          ],
+          "finisher": { "exercise": "dumbbell-triceps-kickback", "reps": 15 }
+        },
+        {
+          "id": "landmine-press",
+          "name": "Landmine press",
+          "main": { "exercise": "landmine-press", "reps": 8, "each": "side" },
+          "supersetA": [
+            { "exercise": "dumbbell-lateral-raise", "reps": 12 },
+            { "exercise": "dumbbell-skull-crusher", "reps": 12 }
+          ],
+          "supersetB": [
+            { "exercise": "dumbbell-upright-row", "reps": 12 },
+            { "exercise": "rope-triceps-pushdown", "reps": 12 }
+          ],
+          "finisher": { "exercise": "cable-face-pull", "reps": 15 }
+        }
+      ]
+    },
+    {
+      "id": "back",
+      "name": "Back",
+      "variations": [
+        {
+          "id": "lat-pulldown",
+          "name": "Lat pulldown",
+          "main": { "exercise": "wide-grip-lat-pulldown", "reps": 10 },
+          "supersetA": [
+            { "exercise": "one-arm-dumbbell-row", "reps": 10, "each": "side" },
+            { "exercise": "straight-arm-pulldown", "reps": 12 }
+          ],
+          "supersetB": [
+            { "exercise": "seated-cable-row", "reps": 12 },
+            { "exercise": "bent-over-rear-delt-raise", "reps": 12 }
+          ],
+          "finisher": { "exercise": "superman", "reps": 15 }
+        },
+        {
+          "id": "cable-row",
+          "name": "Cable row",
+          "main": { "exercise": "seated-cable-row", "reps": 10 },
+          "supersetA": [
+            { "exercise": "close-grip-lat-pulldown", "reps": 12 },
+            { "exercise": "bent-over-dumbbell-row", "reps": 10 }
+          ],
+          "supersetB": [
+            { "exercise": "landmine-one-arm-row", "reps": 10, "each": "side" },
+            { "exercise": "cable-face-pull", "reps": 12 }
+          ],
+          "finisher": { "exercise": "straight-arm-pulldown", "reps": 15 }
+        },
+        {
+          "id": "dumbbell-row",
+          "name": "Dumbbell row",
+          "main": { "exercise": "bent-over-dumbbell-row", "reps": 10 },
+          "supersetA": [
+            { "exercise": "wide-grip-lat-pulldown", "reps": 12 },
+            { "exercise": "prone-y-raise", "reps": 12 }
+          ],
+          "supersetB": [
+            { "exercise": "seated-cable-row", "reps": 12 },
+            { "exercise": "cable-face-pull", "reps": 12 }
+          ],
+          "finisher": { "exercise": "bent-over-rear-delt-raise", "reps": 15 }
+        }
+      ]
+    }
+  ]
+}
