@@ -86,7 +86,8 @@ export function setsSummary({ block, warmups, times }, slot) {
   return `${warmup}, then ${work}`;
 }
 
-export const variationTitle = (index, variation) => `${index + 1} · ${variation.name}`;
+// What comes before a variation's name in its box: "1 · " of "1 · Hip thrust".
+export const variationLead = (index) => `${index + 1} · `;
 export const addRestLabel = (seconds) => `Add ${plural(seconds, "second")}`;
 export const targetText = (targetMs) => `/ ${formatElapsed(targetMs)}`;
 export const finishText = (elapsedMs) => `${COPY.done} · ${formatElapsed(elapsedMs)}`;

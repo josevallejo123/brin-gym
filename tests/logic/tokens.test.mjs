@@ -92,6 +92,20 @@ test("keyframes move only opacity, transform and the flourish's stroke", () => {
   }
 });
 
+// A part of a screen steps in on a numbered beat (css/base.css), so the last
+// part lands after the last beat's wait and one step's length.
+test("a change of screen is over within 300 ms of the tap", () => {
+  const LONGEST = 300;
+  const milliseconds = (name) => Number.parseFloat(tokens.get(name));
+  const base = otherCss.find(({ file }) => file === "css/base.css").css;
+  const lastBeat = Math.max(...[...base.matchAll(/--step:\s*(\d+)/g)].map(([, beat]) => Number(beat)));
+
+  assert.ok(lastBeat > 0, "the parts do step in on beats");
+  assert.ok(lastBeat * milliseconds("--delay-step") + milliseconds("--duration-step") <= LONGEST);
+  assert.ok(milliseconds("--duration-screen") <= LONGEST);
+  assert.ok(milliseconds("--duration-leave") <= milliseconds("--duration-screen"));
+});
+
 // A paused stage is drawn at --dim-opacity over the background, which mixes
 // each colour that far towards it.
 test("paused, the dimmed stage still reads: muted text keeps a contrast of 4.5:1", () => {

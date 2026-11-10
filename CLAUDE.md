@@ -32,6 +32,7 @@ The owner said no to each of these. Do not add them, even as a small convenience
 - A way to replace the drawings with her own photos or video.
 - Notifications, accounts, sharing.
 - Exercises or equipment outside the approved list: no barbell squats, Bulgarian split squats, leg curls, shrugs, trap bar, lateral raise machine arm, cable lateral raises, biceps, chest or abs work. Lateral raises and deadlifts are done with dumbbells only.
+- Any exercise done lying face down. Superman and the prone Y raise were taken out for that reason.
 
 Copy is plain and in sentence case: no exclamation marks, no emoji.
 
@@ -54,12 +55,12 @@ app/                    the site: only this folder is published (to the gh-pages
                         takes `now`), session.js (state + clock + save), store.js, format.js, cues.js
   js/platform/          sounds.js, wake-lock.js, updates.js
   js/ui/                copy.js (every word that is not workout content), dom.js, routes.js,
-                        drawing.js, screens/
+                        drawing.js, handover.js (how one screen gives way to the next), screens/
 tools/app/              serve.mjs, offline-list.mjs, render-icons.mjs, png.mjs, tokens.mjs, site.mjs
 tools/content/          check-workouts.mjs, art-map.json, prepare-art.mjs, contact-sheet.mjs
 tools/publish.mjs       npm run publish
 tests/logic/            node --test
-tests/browser/          Playwright: walk, player, layout, navigation, shell, new-version
+tests/browser/          Playwright: walk, player, layout, navigation, handover, shell, new-version
 tests/fixtures/         small stand-in content the tests run on by default
 docs/quality-bar.md     the quality bar
 docs/decisions.md       decisions and their alternatives
@@ -95,7 +96,7 @@ npm run test:live           the walk and the offline check on the published site
 
 ## Changing things
 
-- **A workout, a rep count, a rest length:** edit `app/data/workouts.json`, then check, test and publish. The twelve workouts were approved word for word; change them only when asked, and only as asked.
+- **A workout, a rep count, a rest length:** edit `app/data/workouts.json`, then check, test and publish. The twelve workouts were approved word for word; change them only when asked, and only as asked. An exercise no workout uses is taken out of the file, with its folder in `app/art/` and its line in `tools/content/art-map.json`; the check says so if one is left behind.
 - **A drawing:** edit `tools/content/art-map.json` and re-run `tools/content/prepare-art.mjs` with the two source sets cloned outside this project (README, "Changing a drawing"). The drawings are CC BY-SA 4.0: keep `app/art/credits.json`, `app/art/LICENSE.md`, the About screen and the README's credit in step.
 - **A colour or size:** `app/css/tokens.css`. The icons are rendered from the tokens: run `npm run icons` after a palette change.
 - **A new iPhone screen size:** add a row to `IPHONE_SCREENS` in `tools/app/render-icons.mjs` and run `npm run icons`.
@@ -104,7 +105,7 @@ npm run test:live           the walk and the offline check on the published site
 
 `docs/quality-bar.md` holds the full list with how each rule is checked. In short:
 
-- **Design:** always dark plum with one rose-gold accent; two bundled typefaces (Bodoni Moda for headings and numerals, Jost for the rest); no gradients, glow, blur, shadows or cards; no emoji; left-aligned with one clear action per screen; lots of empty space; timer digits that never shift; tap targets of at least 44 px; nothing cut off at 375×667; short, calm motion that respects reduced motion.
+- **Design:** always dark plum with one rose-gold accent; two bundled typefaces (Bodoni Moda for headings and numerals, Jost for the rest); no gradients, glow, blur or shadows; nothing boxed except the choices on Home and Day, which the owner asked to be boxes; no emoji; left-aligned with one clear action per screen; lots of empty space; timer digits that never shift; tap targets of at least 44 px; nothing cut off at 375×667; short, calm motion that is over within 300 ms and respects reduced motion. Picking a day or a variation sends its name travelling to the next screen's title (`app/js/ui/handover.js`).
 - **Feels like an app:** no white flash, no text selection or tap highlight, no double-tap zoom, no rubber-banding on fixed screens, nothing under the notch or the home indicator, and reopening returns to where she was.
 - **Code:** small modules, no dead code, no duplicate blocks, no magic numbers, no swallowed errors, no console output, tests on the timer and state logic, and no claim that was not checked.
 - **iPhone Home Screen web app:** relative manifest, an opaque 180 px touch icon, launch images, safe areas, cache-first service worker, a new version that never interrupts a workout.

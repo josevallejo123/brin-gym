@@ -2,7 +2,7 @@
 // fitted to the canvas, redrawn at one line weight, in the app's colour-neutral file format.
 //
 //   node tools/content/prepare-art.mjs --sources <folder holding the clones>
-//   node tools/content/prepare-art.mjs --sources <folder> --only goblet-squat,superman
+//   node tools/content/prepare-art.mjs --sources <folder> --only goblet-squat,frog-pump
 //
 // <folder> holds one clone per source, in the sub-folder art-map.json names for it ("folder"),
 // each checked out at the commit art-map.json records. The clones are read, never run, and

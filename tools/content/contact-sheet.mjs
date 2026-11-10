@@ -3,7 +3,7 @@
 //
 //   node tools/content/contact-sheet.mjs
 //   node tools/content/contact-sheet.mjs --large 264 --small 104
-//   node tools/content/contact-sheet.mjs --only goblet-squat,superman --out some/folder
+//   node tools/content/contact-sheet.mjs --only goblet-squat,frog-pump --out some/folder
 //
 // The colours and the small size come from app/css/tokens.css unless --fg, --bg or --small
 // say otherwise. The large size is the player's drawing on a 390-point-wide iPhone.

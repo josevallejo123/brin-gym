@@ -9,6 +9,7 @@ import { createStore } from "./logic/store.js";
 import { createSounds } from "./platform/sounds.js";
 import { createUpdater } from "./platform/updates.js";
 import { createWakeLock } from "./platform/wake-lock.js";
+import { changeScreen } from "./ui/handover.js";
 import { ABOUT, DONE, HOME, WORKOUT, dayAddress, workoutInAddress } from "./ui/routes.js";
 import { dayScreen, homeScreen, variationScreen } from "./ui/screens/lists.js";
 import { aboutScreen, failedScreen, finishScreen } from "./ui/screens/plain.js";
@@ -43,7 +44,7 @@ function show(name, element, leave = null) {
   leaveScreen?.();
   leaveScreen = leave;
   showing = name;
-  app.replaceChildren(element);
+  changeScreen(app, element);
 }
 
 function start(data) {

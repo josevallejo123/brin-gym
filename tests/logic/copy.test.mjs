@@ -12,7 +12,7 @@ import {
   restEndedText,
   setsSummary,
   stepLabel,
-  variationTitle,
+  variationLead,
 } from "../../app/js/ui/copy.js";
 import { HOUR, MINUTE, SECOND } from "./helpers.mjs";
 
@@ -85,7 +85,7 @@ test("a set done ticks, a rest ending on screen chimes, and a rest that ended wh
 });
 
 test("titles and buttons follow the brief's wording", () => {
-  assert.equal(variationTitle(0, { name: "Hip thrust" }), "1 · Hip thrust");
+  assert.equal(`${variationLead(0)}Hip thrust`, "1 · Hip thrust");
   assert.equal(finishText(29 * MINUTE + 41 * SECOND), "Done · 29:41");
   assert.equal(addRestLabel(15), "Add 15 seconds");
 });

@@ -68,8 +68,6 @@
     "one-arm-dumbbell-row": { "source": "workout-guide", "slug": "one-arm-dumbbell-row", "frames": [3, 2, 1], "still": 3, "note": "Right movement. Start arm down, finish pulled up. All three source frames match." },
     "bent-over-dumbbell-row": { "source": "workout-guide", "slug": "dumbbell-bent-over-row", "frames": [3, 2, 1], "still": 3, "note": "Right movement. Start arms down, finish pulled up. All three source frames match." },
     "landmine-one-arm-row": { "source": "workout-guide", "slug": "meadows-row", "frames": [{ "from": 3, "close": 1.2, "smooth": 1.4, "shift": [1, -13] }, 1], "still": 2, "note": "Right movement: the bar itself is gripped, as drawn. Start bar down, finish pulled up. Source frame 3 was a double-line trace, joined and smoothed. Source frame 2 dropped: rough." },
-    "bent-over-rear-delt-raise": { "source": "workout-guide", "slug": "bent-over-rear-delt-raise", "frames": [3, 1], "still": 2, "note": "Right movement. Start dumbbells down, finish arms out. Source frame 2 dropped: a rough double-line trace." },
-    "prone-y-raise": { "source": "workout-guide", "slug": "prone-y-raise", "frames": [2, 1], "still": 2, "note": "Near match: drawn lying on the floor without dumbbells; the workouts do it face down on an incline bench with light ones. Start arms out low, finish raised in a Y. Source frame 3 dropped: a different view." },
-    "superman": { "source": "workout-guide", "slug": "superman", "frames": [3, { "from": 1, "shift": [0, 36] }], "still": 2, "note": "Right movement. Start lying flat, finish arms and legs raised. Source frame 2 dropped: too thin to redraw cleanly." }
+    "bent-over-rear-delt-raise": { "source": "workout-guide", "slug": "bent-over-rear-delt-raise", "frames": [3, 1], "still": 2, "note": "Right movement. Start dumbbells down, finish arms out. Source frame 2 dropped: a rough double-line trace." }
   }
 }

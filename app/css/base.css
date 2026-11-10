@@ -161,11 +161,16 @@ svg {
      it scrolls rather than hiding a button. */
   overflow-y: auto;
   scrollbar-width: none;
-  animation: screen-in var(--duration-screen) var(--ease-out) both;
 }
 
 .screen::-webkit-scrollbar {
   display: none;
+}
+
+/* A screen arrives in one of two ways (js/ui/handover.js). Most simply fade
+   in, as one piece. */
+.screen.fades-in {
+  animation: screen-in var(--duration-screen) var(--ease-out) both;
 }
 
 @keyframes screen-in {
@@ -175,8 +180,94 @@ svg {
   }
 }
 
+/* The other way, when she taps a box or goes back to one: the name she chose
+   travels to its place on the new screen, the old screen fades out behind
+   it, and the parts of the new one step in after it, a beat apart. */
+.steps-in :is(.topbar, .screen-title, .variation-day, .choice, .group, .quiet-link, .footer-actions) {
+  animation: step-in var(--duration-step) var(--ease-out) both;
+  animation-delay: calc(var(--step) * var(--delay-step));
+}
+
+/* The back control sits in the same place on every screen that has one, so
+   it only fades. */
+.steps-in .topbar {
+  animation-name: fade-in;
+}
+
+/* The name leads; what belongs under it follows from the top down. */
+.steps-in :is(.variation-day, .choice, .group) {
+  --step: 1;
+}
+
+.steps-in :is(.choice, .group):nth-of-type(2) {
+  --step: 2;
+}
+
+.steps-in :is(.choice, .group):nth-of-type(3) {
+  --step: 3;
+}
+
+.steps-in :is(.choice, .group):nth-of-type(n + 4),
+.steps-in :is(.quiet-link, .footer-actions) {
+  --step: 4;
+}
+
+.screen.leaving {
+  pointer-events: none;
+  animation: screen-out var(--duration-leave) var(--ease-in-out) both;
+}
+
+/* The two copies of the travelling name: the new screen's sets out from
+   where the old one was, and the old screen's heads for where the new one
+   is, in step, one fading in as the other fades out with its screen. */
+.steps-in .arrives,
+.leaving .departs {
+  transform-origin: top left;
+}
+
+.steps-in .arrives {
+  animation:
+    arrive var(--duration-screen) var(--ease-out) both,
+    fade-in var(--duration-name-fade) var(--ease-out) both;
+}
+
+.leaving .departs {
+  animation: depart var(--duration-screen) var(--ease-out) both;
+}
+
+@keyframes step-in {
+  from {
+    opacity: 0;
+    transform: translateY(var(--step-shift));
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes screen-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes arrive {
+  from {
+    transform: translate(var(--travel-x), var(--travel-y)) scale(var(--travel-scale));
+  }
+}
+
+@keyframes depart {
+  to {
+    transform: translate(var(--travel-x), var(--travel-y)) scale(var(--travel-scale));
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .screen {
+  .screen.fades-in {
     animation: none;
   }
 }

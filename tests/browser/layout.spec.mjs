@@ -10,6 +10,7 @@ import {
   expectNoOverflow,
   heading,
   openApp,
+  screen,
   startWorkout,
   test,
   workouts,
@@ -35,7 +36,7 @@ async function expectTapTargets(page) {
 }
 
 async function expectInThumbReach(page, name) {
-  const box = await page.locator(".screen").getByRole("button", { name, exact: true }).boundingBox();
+  const box = await screen(page).getByRole("button", { name, exact: true }).boundingBox();
   const { height } = page.viewportSize();
   expect(box.height, `${name} height`).toBeGreaterThanOrEqual(MAIN_ACTION_MIN_HEIGHT);
   expect(box.y, `${name} sits in the bottom third`).toBeGreaterThan((height * 2) / 3);
@@ -131,7 +132,7 @@ test.describe("with reduced motion on", () => {
 
   test("screens arrive without moving", async ({ page }) => {
     await openApp(page);
-    expect(await page.locator(".screen").evaluate((node) => getComputedStyle(node).animationName)).toBe("none");
+    expect(await screen(page).evaluate((node) => getComputedStyle(node).animationName)).toBe("none");
   });
 });
 

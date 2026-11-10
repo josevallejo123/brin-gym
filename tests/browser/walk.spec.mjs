@@ -19,6 +19,7 @@ import {
   restName,
   skipButton,
   stepLabel,
+  stopClock,
   test,
   workouts,
 } from "./app.mjs";
@@ -59,6 +60,9 @@ for (const workout of workouts) {
     await expect(page.locator(".exercise-name")).toHaveText(listed.map(exerciseName));
     await expectNoOverflow(page);
 
+    // Every rest below is read off the screen to the second. With the clock
+    // running, a busy machine let a second pass between a tap and the look.
+    await stopClock(page);
     await button(page, COPY.start).click();
 
     for (const [index, step] of steps.entries()) {

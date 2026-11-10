@@ -10,11 +10,11 @@ How to read a rule: the letter and number are its ID; the text in brackets says 
 
 - **D1.** No gradients, glow, blur, glass effects or shadows, anywhere. The one layer that sits over a screen, the End workout sheet, dims what is behind it with a flat scrim. [Test: `tokens.test.mjs` searches the CSS for `gradient`, `blur`, `shadow` and `filter`.]
 - **D2.** No emoji anywhere, as icons or in copy. Icons are line drawings in one stroke weight, drawn as SVG. [Shot; code.]
-- **D3.** Content is not wrapped in rounded, bordered cards. Space separates things; a hairline is used only where it carries information (a progress line, a group boundary). [Shot.]
-- **D4.** One accent colour, rose gold. It marks the single primary action of a screen, the progress lines and the Finish flourish, and nothing else. [Shot; code: only `--color-accent` and `--color-accent-pressed` are accent hues.]
+- **D3.** Content is not wrapped in rounded, bordered cards. Space separates things; a hairline is used only where it carries information (a progress line, a group boundary). The one exception, asked for by the owner: each choice on Home and Day is a box, one hairline outline around one flat fill, because each is a separate thing to tap and must read as one. Nothing else is boxed. [Shot.]
+- **D4.** One accent colour, rose gold. It marks the single primary action of a screen, the progress lines, the Finish flourish, and the rim of a choice while it is pressed and for the moment after, and nothing else. [Shot; code: only `--color-accent` and `--color-accent-pressed` are accent hues.]
 - **D5.** One clear action per screen. A screen has at most one filled accent button. [Shot.]
 - **D6.** Layouts are left-aligned with a visible order of importance: one largest thing, then supporting text. Nothing is centred by default. [Shot.]
-- **D7.** Lots of empty space. Home, Day and Finish each leave at least a third of the screen empty. [Shot.]
+- **D7.** Lots of empty space. Between the title and the things she taps, Day and Finish leave at least a third of the screen empty and Home at least a quarter. The small iPhone is the exception: Home's four boxes leave it a fifth. [Shot.]
 
 **Type**
 
@@ -41,9 +41,9 @@ How to read a rule: the letter and number are its ID; the text in brackets says 
 
 **Motion**
 
-- **D22.** Motion is short and calm: nothing bounces, nothing overshoots, no user-triggered transition runs longer than 300 ms. Only `transform` and `opacity` are animated (and the stroke of the Finish flourish as it draws), never layout, and never `transition: all`. The flourish is the one longer, unprompted movement in the app. [Test: `tokens.test.mjs`; code.]
-- **D23.** One movement per screen change. Elements do not each fade and slide in on their own. [Code; shot.]
-- **D24.** With reduced motion on, drawings show a still frame and transitions are removed. [Test: the browser test runs with reduced motion; code.]
+- **D22.** Motion is short and calm: nothing bounces, nothing overshoots, and every change she triggers is over within 300 ms of her tap. Only `transform` and `opacity` are animated (and the stroke of the Finish flourish as it draws), never layout, and never `transition: all`. The flourish is the one longer, unprompted movement in the app. [Test: `tokens.test.mjs`; code.]
+- **D23.** A change of screen is one movement with one lead. When she picks a day or a variation, or goes back from one, the name she chose travels between its box and the screen's title; the old screen fades out behind it, the box she chose opening a little towards her; and the parts of the new screen step in after the name, from the top down, a beat apart. Every other change of screen is a single fade. Nothing else moves on its own. [Test: `handover.spec.mjs`; code.]
+- **D24.** With reduced motion on, drawings show a still frame, screens change at once and no name travels. [Test: the browser tests run with reduced motion; code.]
 - **D25.** Nothing jumps as content loads: drawings and timers have their space reserved, and fonts are bundled and preloaded. [Shot; code.]
 
 **Copy**

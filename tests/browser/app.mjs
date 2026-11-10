@@ -6,7 +6,7 @@ import { readFileSync } from "node:fs";
 import { test as base, expect } from "@playwright/test";
 
 import { buildSteps } from "../../app/js/logic/sequence.js";
-import { COPY, addRestLabel, repsText, restName, stepLabel, variationTitle } from "../../app/js/ui/copy.js";
+import { COPY, addRestLabel, repsText, restName, stepLabel, variationLead } from "../../app/js/ui/copy.js";
 
 export { COPY, addRestLabel, expect, repsText, restName, stepLabel };
 
@@ -24,7 +24,7 @@ export const workouts = data.days.flatMap((day) =>
   day.variations.map((variation, index) => ({
     day,
     variation,
-    title: variationTitle(index, variation),
+    title: `${variationLead(index)}${variation.name}`,
     steps: buildSteps(data, variation),
   })),
 );
@@ -33,6 +33,12 @@ export const exerciseName = (step) => data.exercises[step.exercise].name;
 
 // A fixed moment for the page's clock, so times on screen are predictable.
 export const START_TIME = new Date("2026-01-05T18:00:00");
+
+// Stops the page's clock, well after any test has got this far. From then on
+// time moves only when the test moves it (page.clock.fastForward and runFor),
+// so a time read off the screen does not depend on how fast the machine is.
+const CLOCK_STOPS_AT = new Date(START_TIME.getTime() + 10 * 60_000);
+export const stopClock = (page) => page.clock.pauseAt(CLOCK_STOPS_AT);
 
 export const test = base.extend({
   page: async ({ page }, use) => {
@@ -47,9 +53,13 @@ export const test = base.extend({
   },
 });
 
+// The screen on show. For a moment after a change, the one before it is
+// still in the page, fading out.
+export const screen = (page) => page.locator(".screen:not(.leaving)");
+
 export async function openApp(page, route = "") {
   await page.goto(`./#/${route}`);
-  await page.locator(".screen").waitFor();
+  await screen(page).waitFor();
 }
 
 export const heading = (page) => page.getByRole("heading", { level: 1 });
