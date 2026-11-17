@@ -8,13 +8,13 @@ How to read a rule: the letter and number are its ID; the text in brackets says 
 
 **Restraint**
 
-- **D1.** No gradients, glow, blur, glass effects or shadows, anywhere. The one layer that sits over a screen, the End workout sheet, dims what is behind it with a flat scrim. [Test: `tokens.test.mjs` searches the CSS for `gradient`, `blur`, `shadow` and `filter`.]
+- **D1.** No gradients, glow, blur, glass effects or shadows, anywhere. The two layers that sit over the player, the End workout sheet and the plan, dim what is behind them with a flat scrim. [Test: `tokens.test.mjs` searches the CSS for `gradient`, `blur`, `shadow` and `filter`.]
 - **D2.** No emoji anywhere, as icons or in copy. Icons are line drawings in one stroke weight, drawn as SVG. [Shot; code.]
 - **D3.** Content is not wrapped in rounded, bordered cards. Space separates things; a hairline is used only where it carries information (a progress line, a group boundary). The one exception, asked for by the owner: each choice on Home and Day is a box, one hairline outline around one flat fill, because each is a separate thing to tap and must read as one. Nothing else is boxed. [Shot.]
-- **D4.** One accent colour, rose gold. It marks the single primary action of a screen, the progress lines, the Finish flourish, and the rim of a choice while it is pressed and for the moment after, and nothing else. [Shot; code: only `--color-accent` and `--color-accent-pressed` are accent hues.]
+- **D4.** One accent colour, rose gold. It marks the single primary action of a screen, the progress lines and the plan's marks of progress (with the word "Now" or "Next" beside the set she is at), and the rim of a choice while it is pressed and for the moment after, and nothing else. *Amended 2026-11-17 at the owner's request:* the Finish screen's confetti adds three colours of its own (champagne, blush, lilac) beside the rose gold and the text colour, and they appear nowhere else. [Shot; code: only `--color-accent` and `--color-accent-pressed` are accent hues, and the three `--color-confetti-*` tokens are used only by `.confetti-piece`.]
 - **D5.** One clear action per screen. A screen has at most one filled accent button. [Shot.]
 - **D6.** Layouts are left-aligned with a visible order of importance: one largest thing, then supporting text. Nothing is centred by default. [Shot.]
-- **D7.** Lots of empty space. Between the title and the things she taps, Day and Finish leave at least a third of the screen empty and Home at least a quarter. The small iPhone is the exception: Home's four boxes leave it a fifth. [Shot.]
+- **D7.** Lots of empty space. Between the title and the things she taps, Day leaves at least a third of the screen empty and Home at least a quarter. The small iPhone is the exception: Home's four boxes leave it a fifth. Finish sets the clip, the words and Continue low, in thumb reach, and leaves at least the top third of the screen to the confetti. [Shot.]
 
 **Type**
 
@@ -34,21 +34,21 @@ How to read a rule: the letter and number are its ID; the text in brackets says 
 **Controls**
 
 - **D17.** No default-looking controls: every button, link and the dialog is styled, with no browser default outline, underline or grey button face. [Shot.]
-- **D18.** Every tap target is at least 44×44 px; Done, Start and Resume are at least 56 px tall and sit in the bottom third, in thumb reach. The one exception is a link inside a sentence, which only the credits on About have. [Test: `layout.spec.mjs` measures every target on every screen.]
+- **D18.** Every tap target is at least 44×44 px; Done, Start, Resume and the Finish screen's Continue are at least 56 px tall and sit in the bottom third, in thumb reach. The player's top bar holds four 44 px controls beside the total time and keeps them on one line at 375 px wide, even past an hour. The one exception is a link inside a sentence, which only the credits on About have. [Test: `layout.spec.mjs` measures every target on every screen, with the plan open, and the top bar at 1:02:00.]
 - **D19.** Every control has a pressed state, and focus is visible for keyboard use. A pressed control gets lighter, never dimmer, so pressed and focused states have more contrast than the resting state. [Code: `:active` and `:focus-visible` rules.]
 - **D20.** Nothing looks tappable that is not, and everything tappable looks it. [Shot.]
 - **D21.** Icon-only buttons have an accessible name. [Test: the walk finds every button by its name.]
 
 **Motion**
 
-- **D22.** Motion is short and calm: nothing bounces, nothing overshoots, and every change she triggers is over within 300 ms of her tap. Only `transform` and `opacity` are animated (and the stroke of the Finish flourish as it draws), never layout, and never `transition: all`. The flourish is the one longer, unprompted movement in the app. [Test: `tokens.test.mjs`; code.]
-- **D23.** A change of screen is one movement with one lead. When she picks a day or a variation, or goes back from one, the name she chose travels between its box and the screen's title; the old screen fades out behind it, the box she chose opening a little towards her; and the parts of the new screen step in after the name, from the top down, a beat apart. Every other change of screen is a single fade. Nothing else moves on its own. [Test: `handover.spec.mjs`; code.]
-- **D24.** With reduced motion on, drawings show a still frame, screens change at once and no name travels. [Test: the browser tests run with reduced motion; code.]
+- **D22.** Motion is short and calm: nothing bounces, nothing overshoots, and every change she triggers is over within 300 ms of her tap. Only `transform` and `opacity` are animated, never layout, and never `transition: all`. *Amended 2026-11-17 at the owner's request:* the Finish screen's confetti and its looping clip are the one motion that runs on its own past 300 ms, for as long as that screen shows; the confetti stops while the app is out of sight and fades out before it reaches the words. They replaced the flourish that used to draw itself there. [Test: `tokens.test.mjs`, `finish.spec.mjs`; code.]
+- **D23.** A change of screen is one movement with one lead. When she picks a day or a variation, or goes back from one, the name she chose travels between its box and the screen's title; the old screen fades out behind it, the box she chose opening a little towards her; and the parts of the new screen step in after the name, from the top down, a beat apart. Every other change of screen is a single fade. Nothing else moves on its own, but the Finish screen's confetti and clip (D22). [Test: `handover.spec.mjs`; code.]
+- **D24.** With reduced motion on, drawings show a still frame, screens change at once and no name travels. The Finish clip shows its still frame and the confetti lies still. [Test: the browser tests run with reduced motion; code.]
 - **D25.** Nothing jumps as content loads: drawings and timers have their space reserved, and fonts are bundled and preloaded. [Shot; code.]
 
 **Copy**
 
-- **D26.** Copy is plain and in sentence case. No exclamation marks, no motivational or cheerful lines, no placeholder or filler text. [Code: search the app for `!` in strings; shot.]
+- **D26.** Copy is plain and in sentence case. No exclamation marks, no motivational or cheerful lines, no placeholder or filler text. *Amended 2026-11-17 at the owner's request:* the Finish screen's heading, "Good job!", in his words, is the one exception. [Test: `copy.test.mjs` finds no `!` in any other string; shot.]
 - **D27.** A button says what it does, and an action keeps one name everywhere. [Shot.]
 - **D28.** When something fails, the screen says what happened and what to do. [Code: the load-error screen.]
 
@@ -57,7 +57,7 @@ How to read a rule: the letter and number are its ID; the text in brackets says 
 - **A1.** No white flash on launch or between screens: the background colour is set inline on the root element before any stylesheet loads, and `theme-color` and the manifest colours match it. [Code: `index.html`; **(phone)** for the cold start.]
 - **A2.** No text selection, no long-press callout and no grey tap highlight on controls. [Code: `user-select`, `-webkit-touch-callout`, `-webkit-tap-highlight-color`.]
 - **A3.** No double-tap zoom: controls use `touch-action: manipulation`. Pinch zoom is left alone, because it is an accessibility feature. [Code.]
-- **A4.** Fixed screens do not rubber-band: every screen is laid out to fit both phone sizes, so nothing scrolls but the variation list and About, and their scrolling does not drag the page. A screen scrolls only as a fallback when it cannot fit (the phone on its side). [Code: `overscroll-behavior`; test: the walk finds no overflow; **(phone)**.]
+- **A4.** Fixed screens do not rubber-band: every screen is laid out to fit both phone sizes, so nothing scrolls but the variation list, the plan's list and About, and their scrolling does not drag the page. A screen scrolls only as a fallback when it cannot fit (the phone on its side). [Code: `overscroll-behavior`; test: the walk finds no overflow; **(phone)**.]
 - **A5.** Nothing sits under the notch, the status bar or the home indicator: edges are padded with `env(safe-area-inset-*)`, and the layout still holds when those insets are zero. [Code; shot at 375×667, which has no insets.]
 - **A6.** Reopening the app returns to where she was. A workout in progress opens straight into the player with no loading screen in between. [Test: reload mid-set and mid-rest.]
 - **A7.** No browser chrome leaks in: no page scrollbars, no underlined blue links, no focus ring on tap, no "Loading" text on a normal launch. [Shot.]
@@ -83,6 +83,7 @@ How to read a rule: the letter and number are its ID; the text in brackets says 
 - **C16.** Every platform API that is not universal is feature-detected before use, and named in section 4 with its source. [Code.]
 - **C17.** Claims are checked before they are written down. "Works offline", "restores after reload" and "no console errors" each have a test; the README states nothing that was not run. [Test; README.]
 - **C18.** Comments say why, not what. No banner comments, no narration of the next line. [Code.]
+- **C19.** *Added 2026-11-17 with the owner's clip:* the one photo or video in the app, the Finish clip and its still, carries picture data and nothing else: no location, EXIF, XMP or colour profile. It is the only such file in `app/`, and `.gitignore` and the publish tool let exactly its two paths through. [Test: `finish-clip.test.mjs` reads every chunk; `publish.test.mjs`.]
 
 ## 4. iOS Home Screen web app
 
@@ -114,7 +115,7 @@ How to read a rule: the letter and number are its ID; the text in brackets says 
 
 **Sound**
 
-- **H12.** Sounds are made with Web Audio only. There is no `<audio>` or `<video>` element and no media file, because a media element moves the page's audio session to "playback", which pauses other apps' music. [Code: search for `audio`, `video`, `.mp3`, `.wav`.]
+- **H12.** Sounds are made with Web Audio only. There is no `<audio>` or `<video>` element and no sound or video file, because a media element moves the page's audio session to "playback", which pauses other apps' music. The Finish clip is an animated image in an `<img>`, which has no sound and no part in the audio session. [Code: search for `audio`, `video`, `.mp3`, `.wav`; test: `finish.spec.mjs`.]
 - **H13.** Where `navigator.audioSession` exists, its `type` is set to `"ambient"` before the audio context is created. Ambient is the one type defined as mixing with other audio. [Code; **(phone)** for Spotify and Apple Music.]
 - **H14.** The audio context is created and resumed only inside a tap, on `click`, the one event every browser counts as a tap (a touch `pointerdown` does not count). It is resumed again when the app returns to the screen. [Code; test: no autoplay warning in the walk.]
 - **H15.** Sounds play only while the app is visible, and are never replayed late for a rest that ended in the background. [Test: the countdown cue in `copy.test.mjs` and the sounds tests in `player.spec.mjs`, which count every note the app starts.]

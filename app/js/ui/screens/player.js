@@ -14,8 +14,9 @@ import {
   stepLabel,
   targetText,
 } from "../copy.js";
-import { button, el, icon, iconButton } from "../dom.js";
+import { button, closeOnBackdrop, el, icon, iconButton } from "../dom.js";
 import { loopingDrawing, stillDrawing } from "../drawing.js";
+import { planSheet } from "./plan.js";
 
 // A thin line that fills from the left. It is redrawn only when it has moved
 // far enough to see, so the long total-time line is not animating all workout.
@@ -62,11 +63,9 @@ function endSheet(onEnd) {
       button(COPY.continueWorkout, () => sheet.close(), "button-main"),
     ),
   );
-  // A tap on the dimmed screen behind the sheet closes it, like Continue.
-  sheet.addEventListener("click", (event) => {
-    if (event.target === sheet) sheet.close();
-  });
-  return sheet;
+  // A tap on the dimmed screen behind the sheet, or on its edge, closes it
+  // like Continue.
+  return closeOnBackdrop(sheet);
 }
 
 // "10", or "10 each side" with the count set larger than the words.
@@ -127,6 +126,7 @@ export function playerScreen({ data, session, sounds, wakeLock }) {
   const totalProgress = progressLine("total-progress");
   const soundButton = iconButton("sound", COPY.mute, toggleSound);
   const sheet = endSheet(() => session.end());
+  const plan = planSheet(data, session.view());
   const stage = el("div", { class: "stage" });
   const actions = el("footer", { class: "player-actions" });
 
@@ -140,6 +140,7 @@ export function playerScreen({ data, session, sounds, wakeLock }) {
       el(
         "div",
         { class: "player-tools" },
+        iconButton("plan", COPY.showPlan, () => plan.show()),
         soundButton,
         el("span", { class: "pause-tool" }, iconButton("pause", COPY.pause, () => session.pause())),
         iconButton("close", COPY.endWorkout, () => sheet.showModal()),
@@ -149,6 +150,7 @@ export function playerScreen({ data, session, sounds, wakeLock }) {
     stage,
     actions,
     sheet,
+    plan.element,
   );
 
   // What is on screen now, so only what changed is redrawn.
@@ -191,6 +193,8 @@ export function playerScreen({ data, session, sounds, wakeLock }) {
       rest = view.phase === "rest" ? restStage(data, view) : null;
       lastCountdown = null;
       stage.replaceChildren(rest ? rest.content : setStage(data, view));
+      // The plan follows her, open or not, so it is right whenever it shows.
+      plan.update(view);
     }
     if (step !== shownStep || view.paused !== shownPaused) {
       actions.replaceChildren(...actionButtons(view));

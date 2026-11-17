@@ -84,9 +84,10 @@ for (const workout of workouts) {
       await REST_MOVES[index % REST_MOVES.length](page, seconds);
     }
 
-    await expect(heading(page)).toHaveText(/^Done · \d+:\d\d$/);
+    await expect(heading(page)).toHaveText(COPY.goodJob);
+    await expect(page.locator(".finish-time")).toHaveText(/^Done · \d+:\d\d$/);
     await expectNoOverflow(page);
-    await button(page, COPY.home).click();
+    await button(page, COPY.leaveFinish).click();
     await expect(heading(page)).toHaveText(COPY.appName);
 
     expect(elsewhere, "requests outside the app's own folder").toEqual([]);

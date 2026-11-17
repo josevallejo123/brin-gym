@@ -82,8 +82,8 @@ test("only transform and opacity are ever transitioned", () => {
   }
 });
 
-test("keyframes move only opacity, transform and the flourish's stroke", () => {
-  const allowed = new Set(["opacity", "transform", "stroke-dashoffset"]);
+test("keyframes move only opacity and transform", () => {
+  const allowed = new Set(["opacity", "transform"]);
   for (const { file, css } of otherCss) {
     for (const [, body] of css.matchAll(/@keyframes [\w-]+ \{([\s\S]*?\})\s*\}/g)) {
       const properties = [...body.matchAll(/([\w-]+):/g)].map(([, property]) => property);

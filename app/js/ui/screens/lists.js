@@ -2,9 +2,9 @@
 // workout. Each returns the element to show.
 
 import { outline } from "../../logic/sequence.js";
-import { COPY, blockName, setsSummary, variationLead } from "../copy.js";
+import { COPY, variationLead } from "../copy.js";
 import { button, el, topbar } from "../dom.js";
-import { stillDrawing } from "../drawing.js";
+import { exerciseGroups } from "../exercise-list.js";
 import { NAMES } from "../handover.js";
 import { ABOUT, dayAddress, variationAddress } from "../routes.js";
 
@@ -56,30 +56,6 @@ export function dayScreen({ day, goBack }) {
   );
 }
 
-function exerciseRow(data, entry, slot) {
-  const exercise = data.exercises[slot.exercise];
-  return el(
-    "li",
-    { class: "exercise-row" },
-    stillDrawing(slot.exercise, exercise),
-    el(
-      "div",
-      {},
-      el("p", { class: "exercise-name" }, exercise.name),
-      el("p", { class: "exercise-sets" }, setsSummary(entry, slot)),
-    ),
-  );
-}
-
-function group(data, entry) {
-  return el(
-    "section",
-    { class: "group" },
-    el("h2", { class: "group-name" }, blockName(entry.block)),
-    el("ul", { class: "exercise-rows" }, entry.slots.map((slot) => exerciseRow(data, entry, slot))),
-  );
-}
-
 export function variationScreen({ data, day, variation, goBack, onStart }) {
   return el(
     "main",
@@ -90,7 +66,7 @@ export function variationScreen({ data, day, variation, goBack, onStart }) {
       { class: "scroll-area" },
       el("h1", { class: "screen-title serif", [NAMES]: variationAddress(day.id, variation.id) }, variation.name),
       el("p", { class: "variation-day" }, day.name),
-      outline(data, variation).map((entry) => group(data, entry)),
+      exerciseGroups(data, outline(data, variation)),
     ),
     el("footer", { class: "footer-actions" }, button(COPY.start, onStart, "button-main")),
   );

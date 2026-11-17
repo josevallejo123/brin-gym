@@ -2,7 +2,7 @@
 
 ## What this is
 
-A workout web app for one person's iPhone, added to the Home Screen from Safari and published on GitHub Pages under `/brin-gym/`. She picks one of four days and one of three variations, and the app walks her through about 30 minutes: one set at a time, timed rests, and a small looping line drawing of each exercise. The person who maintains it changes it by opening Claude Code in this folder and saying what to change.
+A workout web app for one person's iPhone, added to the Home Screen from Safari and published on GitHub Pages under `/brin-gym/`. She picks one of four days and one of three variations, and the app walks her through about 30 minutes: one set at a time, timed rests, and a small looping line drawing of each exercise. During a workout she can open the plan of that workout from the top bar, and the Finish screen celebrates it. The person who maintains it changes it by opening Claude Code in this folder and saying what to change.
 
 Two things matter more than anything else:
 
@@ -19,6 +19,7 @@ Some files in this folder are local only and listed in `.gitignore`. If a `BRIEF
 - **Plain HTML, CSS and JavaScript modules.** No framework, no build step, no runtime dependency. Playwright is the only dependency and is for tests alone.
 - **Sound is Web Audio only**, with `navigator.audioSession.type = "ambient"` where it exists. Never add an `<audio>` or `<video>` element or a sound file: a media element takes over the phone's audio session and pauses her music. Never use a video or audio trick to keep the screen awake.
 - **The repository is public.** It holds `app/`, `tools/`, `tests/`, `docs/`, `README.md`, `CLAUDE.md`, `package.json`, `package-lock.json`, `.gitignore` and `.gitattributes`, and nothing else. Never stage anything `.gitignore` excludes, never weaken `.gitignore`, and never write a name, an address, an email or a path from this computer into a public file. Commits use the repository's GitHub no-reply identity.
+- **One photo or video, and only one.** *Amended 2026-11-17 at the owner's request:* the clip on the Finish screen and its still (`app/finish/clip.webp`, `app/finish/still.webp`) are the owner's own, approved by him for the public app. `.gitignore` and `tools/publish.mjs` let exactly those two paths through, and a test holds the two lists equal. Never add another, never widen the exception, and never write in a public file who is in the clip or where it was filmed. A new clip is stripped of all metadata first (`tests/logic/finish-clip.test.mjs` reads every chunk).
 - **Nothing is created, posted or sent in the maintainer's name** beyond pushing to this one repository when asked to publish.
 
 ## Never add
@@ -28,13 +29,13 @@ The owner said no to each of these. Do not add them, even as a small convenience
 - Calendars, history, streaks, statistics, or any marker of what she did last.
 - Weight notes or any logging.
 - A "what you'll need" equipment strip, form cues, set-up notes or tips.
-- Motivational or cheerful copy of any kind.
+- Motivational or cheerful copy of any kind. *Amended 2026-11-17 at the owner's request:* the one exception is the Finish screen's heading, "Good job!".
 - A way to replace the drawings with her own photos or video.
 - Notifications, accounts, sharing.
 - Exercises or equipment outside the approved list: no barbell squats, Bulgarian split squats, leg curls, shrugs, trap bar, lateral raise machine arm, cable lateral raises, biceps, chest or abs work. Lateral raises and deadlifts are done with dumbbells only.
 - Any exercise done lying face down. Superman and the prone Y raise were taken out for that reason.
 
-Copy is plain and in sentence case: no exclamation marks, no emoji.
+Copy is plain and in sentence case: no exclamation marks (but "Good job!" on Finish), no emoji.
 
 ## Where things live
 
@@ -49,18 +50,23 @@ app/                    the site: only this folder is published (to the gh-pages
   data/workouts.json    ALL workout content: exercises, reps, sets, rest lengths
   art/<exercise-id>/    1.svg, 2.svg and sometimes 3.svg, in playing order; colour-neutral
   art/credits.json      what the About screen credits
+  finish/               the Finish screen's clip (animated WebP) and its still; the owner's own
   css/tokens.css        every colour, size and duration; no raw value anywhere else
   js/config.js          behaviour settings that are not workout content
   js/logic/             sequence.js (the order of sets and rests), workout.js (state, pure,
-                        takes `now`), session.js (state + clock + save), store.js, format.js, cues.js
+                        takes `now`), session.js (state + clock + save), plan.js (each set
+                        done, current or left), store.js, format.js, cues.js
   js/platform/          sounds.js, wake-lock.js, updates.js
   js/ui/                copy.js (every word that is not workout content), dom.js, routes.js,
-                        drawing.js, handover.js (how one screen gives way to the next), screens/
+                        drawing.js, handover.js (how one screen gives way to the next),
+                        exercise-list.js (Variation's list, also in the plan), confetti.js,
+                        screens/ (lists, player, plan sheet, plain screens)
 tools/app/              serve.mjs, offline-list.mjs, render-icons.mjs, png.mjs, tokens.mjs, site.mjs
 tools/content/          check-workouts.mjs, art-map.json, prepare-art.mjs, contact-sheet.mjs
 tools/publish.mjs       npm run publish
 tests/logic/            node --test
-tests/browser/          Playwright: walk, player, layout, navigation, handover, shell, new-version
+tests/browser/          Playwright: walk, player, plan, finish, layout, navigation, handover,
+                        shell, new-version
 tests/fixtures/         small stand-in content the tests run on by default
 docs/quality-bar.md     the quality bar
 docs/decisions.md       decisions and their alternatives
@@ -105,9 +111,9 @@ npm run test:live           the walk and the offline check on the published site
 
 `docs/quality-bar.md` holds the full list with how each rule is checked. In short:
 
-- **Design:** always dark plum with one rose-gold accent; two bundled typefaces (Bodoni Moda for headings and numerals, Jost for the rest); no gradients, glow, blur or shadows; nothing boxed except the choices on Home and Day, which the owner asked to be boxes; no emoji; left-aligned with one clear action per screen; lots of empty space; timer digits that never shift; tap targets of at least 44 px; nothing cut off at 375×667; short, calm motion that is over within 300 ms and respects reduced motion. Picking a day or a variation sends its name travelling to the next screen's title (`app/js/ui/handover.js`).
+- **Design:** always dark plum with one rose-gold accent; two bundled typefaces (Bodoni Moda for headings and numerals, Jost for the rest); no gradients, glow, blur or shadows; nothing boxed except the choices on Home and Day, which the owner asked to be boxes; no emoji; left-aligned with one clear action per screen; lots of empty space; timer digits that never shift; tap targets of at least 44 px; nothing cut off at 375×667; short, calm motion that is over within 300 ms and respects reduced motion. Picking a day or a variation sends its name travelling to the next screen's title (`app/js/ui/handover.js`). *Amended 2026-11-17 at the owner's request:* the Finish screen alone has confetti in colours of its own, falling for as long as it shows, the looping clip and "Good job!"; with reduced motion both stand still.
 - **Feels like an app:** no white flash, no text selection or tap highlight, no double-tap zoom, no rubber-banding on fixed screens, nothing under the notch or the home indicator, and reopening returns to where she was.
 - **Code:** small modules, no dead code, no duplicate blocks, no magic numbers, no swallowed errors, no console output, tests on the timer and state logic, and no claim that was not checked.
 - **iPhone Home Screen web app:** relative manifest, an opaque 180 px touch icon, launch images, safe areas, cache-first service worker, a new version that never interrupts a workout.
 
-What cannot be tested on a computer needs an iPhone: the icon and name, the launch, the chime over her music, the screen staying awake, and returning after switching apps. Say plainly when a change touches one of these and has not been checked on the phone.
+What cannot be tested on a computer needs an iPhone: the icon and name, the launch, the chime over her music, the screen staying awake, returning after switching apps, the Finish clip and confetti playing smoothly in the Home Screen app, and the plan opening and closing over a rest under a thumb. Say plainly when a change touches one of these and has not been checked on the phone.

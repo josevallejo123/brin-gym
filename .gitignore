@@ -21,6 +21,10 @@ INSTALL.md
 *.mp4
 *.m4v
 *.avi
+# The one exception, by exact path: the owner approved this one clip, and its
+# still for reduced motion, for the public app on 2026-11-17.
+!app/finish/clip.webp
+!app/finish/still.webp
 
 # Tooling
 node_modules/

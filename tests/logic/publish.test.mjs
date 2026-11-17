@@ -5,7 +5,7 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 
 import { pagesUrl } from "../../tools/app/site.mjs";
-import { dayStamp, nextVersion, notPublic } from "../../tools/publish.mjs";
+import { APPROVED_PERSONAL_FILES, dayStamp, nextVersion, notPublic } from "../../tools/publish.mjs";
 import { readText } from "./helpers.mjs";
 
 test("the version is the day, with a count from the second publish of a day", () => {
@@ -30,6 +30,15 @@ test("every kind of photo or video .gitignore keeps out is refused by publishing
   assert.ok(kinds.length > 0);
   const insideTheApp = kinds.map((kind) => `app/art/something.${kind}`);
   assert.deepEqual(notPublic(insideTheApp), insideTheApp);
+});
+
+test("the finish clip and its still are the one exception, by exact path, in both locks", () => {
+  assert.deepEqual(notPublic(APPROVED_PERSONAL_FILES), []);
+  const neighbours = ["app/finish/other.webp", "app/finish/clip.gif", "app/clip.webp"];
+  assert.deepEqual(notPublic(neighbours), neighbours);
+
+  const letThrough = [...readText(".gitignore").matchAll(/^!(.+)$/gm)].map(([, file]) => file);
+  assert.deepEqual(letThrough, APPROVED_PERSONAL_FILES);
 });
 
 test("the site's address comes from the repository's address", () => {

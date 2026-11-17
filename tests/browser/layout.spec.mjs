@@ -1,15 +1,19 @@
 // The quality-bar rules that can be measured on a real page: steady timer
 // digits, tap targets, the main action in thumb reach, reduced motion.
 
+import { MINUTE } from "../logic/helpers.mjs";
 import {
   COPY,
   button,
+  closePlan,
   data,
   doneButton,
   expect,
   expectNoOverflow,
+  finishWorkout,
   heading,
   openApp,
+  openPlan,
   screen,
   startWorkout,
   test,
@@ -74,6 +78,10 @@ test("every tap target is at least 44 px, and the main action is in thumb reach"
   await expectTapTargets(page);
   await expectInThumbReach(page, COPY.done);
 
+  await openPlan(page);
+  await expectTapTargets(page);
+  await closePlan(page);
+
   await doneButton(page).click();
   await expectTapTargets(page);
 
@@ -89,6 +97,33 @@ test("every tap target is at least 44 px, and the main action is in thumb reach"
   await openApp(page, "about");
   await expect(heading(page)).toHaveText(COPY.about);
   await expectTapTargets(page);
+});
+
+test("on the Finish screen, Continue is a full-size main action in thumb reach", async ({ page }) => {
+  await finishWorkout(page, workout);
+  await expectTapTargets(page);
+  await expectInThumbReach(page, COPY.leaveFinish);
+});
+
+// Four controls beside the total time, which passes an hour if a workout is
+// left open long enough (it is only dropped after three hours untouched).
+test("the top bar keeps its four controls full size and on one line, even past an hour", async ({ page }) => {
+  await startWorkout(page, workout);
+  await page.clock.fastForward(62 * MINUTE);
+  await expect(page.locator(".total .timer")).toHaveText(/^1:02:\d\d$/);
+  const bar = await page.locator(".player-bar").evaluate((node) => {
+    const tools = [...node.querySelectorAll(".player-tools button")].map((tool) => tool.getBoundingClientRect());
+    const total = node.querySelector(".total").getBoundingClientRect();
+    return {
+      count: tools.length,
+      smallest: Math.min(...tools.flatMap(({ width, height }) => [width, height])),
+      rows: new Set(tools.map(({ top }) => Math.round(top))).size,
+      clearOfTime: tools[0].left >= total.right,
+      totalLines: Math.round(total.height / Number.parseFloat(getComputedStyle(node.querySelector(".total")).lineHeight)),
+    };
+  });
+  expect(bar).toEqual({ count: 4, smallest: TAP_MIN, rows: 1, clearOfTime: true, totalLines: 1 });
+  await expectNoOverflow(page);
 });
 
 test("no name is cut off or runs off the screen, on any day or variation", async ({ page }) => {

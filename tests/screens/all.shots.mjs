@@ -8,10 +8,13 @@ import {
   COPY,
   addRestLabel,
   button,
+  closePlan,
   data,
   doneButton,
   exerciseName,
+  finishWorkout,
   openApp,
+  openPlan,
   skipButton,
   startWorkout,
   test,
@@ -29,9 +32,17 @@ const first = workouts[0];
 let counter = 0;
 
 // Long enough for a screen's entrance to finish, so the shot is the settled
-// screen; the Finish flourish takes longer to draw.
+// screen. On Finish, long enough for the confetti to have filled the top of
+// the screen.
 const SETTLE_MS = 450;
-const FLOURISH_SETTLE_MS = 1600;
+const CONFETTI_SETTLE_MS = 4000;
+
+// The plan, opened over the player, shot, and closed again.
+async function shootPlan(page, name) {
+  await openPlan(page);
+  await shoot(page, name);
+  await closePlan(page);
+}
 
 async function shoot(page, name, settleMs = SETTLE_MS) {
   counter += 1;
@@ -61,9 +72,11 @@ test("every screen and player state", async ({ page }) => {
   // The first workout: warm-up set, a rest, a superset switch, a set-up rest.
   await startWorkout(page, first);
   await shoot(page, "set-warm-up");
+  await shootPlan(page, "plan-at-start");
   await doneButton(page).click();
   await page.clock.runFor(13_000);
   await shoot(page, "rest");
+  await shootPlan(page, "plan-on-rest");
   await button(page, addRestLabel(data.rests.addRestSeconds)).click();
   await shoot(page, "rest-with-time-added");
   await button(page, COPY.pause).click();
@@ -88,6 +101,10 @@ test("every screen and player state", async ({ page }) => {
   await skipButton(page).click();
   await shoot(page, "set-superset");
   await doneButton(page).click();
+  await skipButton(page).click();
+  await shootPlan(page, "plan-in-superset");
+  await button(page, COPY.stepBack).click();
+  await doneButton(page).click();
   await shoot(page, "rest-switch");
 
   // She leaves mid-rest and comes back four minutes after it ended.
@@ -111,14 +128,25 @@ test("every screen and player state", async ({ page }) => {
   await skipButton(page).click();
   await shoot(page, "set-longest-name");
 
-  // Straight through to the end.
+  // Straight through to the end, and the plan on the last set.
   for (let index = longNameIndex; index < longNamed.steps.length - 1; index += 1) {
     await doneButton(page).click();
     await skipButton(page).click();
   }
+  await shootPlan(page, "plan-on-last-set");
   await page.clock.fastForward(21 * 60_000);
   await doneButton(page).click();
-  await shoot(page, "finish", FLOURISH_SETTLE_MS);
+  await shoot(page, "finish", CONFETTI_SETTLE_MS);
+});
+
+test.describe("with reduced motion on", () => {
+  test.use({ reducedMotion: "reduce" });
+
+  test("the Finish screen", async ({ page }) => {
+    await finishWorkout(page, first);
+    counter = 80;
+    await shoot(page, "finish-reduced-motion");
+  });
 });
 
 test("the screen shown when the workouts do not load", async ({ page }) => {

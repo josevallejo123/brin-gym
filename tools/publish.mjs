@@ -36,8 +36,11 @@ const REMOTE = "origin";
 // stays on this computer (.gitignore keeps it out; this is the second lock).
 const PUBLIC_FOLDERS = ["app/", "tools/", "tests/", "docs/"];
 const PUBLIC_FILES = ["package.json", "package-lock.json", "README.md", "CLAUDE.md", ".gitignore", ".gitattributes"];
-// The app has no photos or video, so a file of that kind is personal.
+// A photo or video is personal. The one exception, by exact path, is the
+// clip on the Finish screen and its still, which the owner approved for the
+// public app on 2026-11-17. .gitignore lets exactly these two through too.
 const PERSONAL_FILE = /\.(jpe?g|hei[cf]|webp|gif|tiff?|dng|mov|mp4|m4v|avi)$/i;
+export const APPROVED_PERSONAL_FILES = ["app/finish/clip.webp", "app/finish/still.webp"];
 
 // Commits carry GitHub's no-reply address, because an email address in a
 // public history cannot be taken back.
@@ -61,7 +64,8 @@ export function dayStamp(date) {
 // The files that must not be in a public repository.
 export function notPublic(paths) {
   const isPublic = (file) => PUBLIC_FILES.includes(file) || PUBLIC_FOLDERS.some((folder) => file.startsWith(folder));
-  return paths.filter((file) => !isPublic(file) || PERSONAL_FILE.test(file));
+  const isPersonal = (file) => PERSONAL_FILE.test(file) && !APPROVED_PERSONAL_FILES.includes(file);
+  return paths.filter((file) => !isPublic(file) || isPersonal(file));
 }
 
 const runGit = (args) => spawnSync("git", args, { cwd: ROOT, encoding: "utf8" });

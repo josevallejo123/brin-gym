@@ -88,6 +88,8 @@ export function createSession({ data, store, clock }) {
       if (state === null) return null;
       const now = clock.now();
       return {
+        dayId: state.dayId,
+        variationId: state.variationId,
         stepIndex: state.stepIndex,
         step: steps[state.stepIndex],
         nextStep: steps[state.stepIndex + 1] ?? null,

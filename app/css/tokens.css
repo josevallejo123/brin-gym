@@ -19,6 +19,11 @@
   --color-on-accent: #2a1a1f;
   --color-drawing: #eadad5;
   --color-scrim: rgb(13 8 11 / 0.66);
+  /* Confetti, on the Finish screen only, with the accent and the text colour:
+     jewellery tones that sit on plum without shouting. */
+  --color-confetti-champagne: #e8cf9f;
+  --color-confetti-blush: #e3a6b0;
+  --color-confetti-lilac: #b7a0d2;
 
   /* Type: Bodoni Moda for headings and every number that counts time or
      reps, Jost for the rest. Sizes follow the classic typographic scale. */
@@ -83,8 +88,30 @@
   /* How far the stage dims while paused. Muted text must still read through
      it (tests/logic/tokens.test.mjs works the contrast out). */
   --dim-opacity: 0.75;
-  --flourish-width: 9rem;
-  --flourish-stroke: 1.5;
+  /* The plan: how much of the player shows above it, and its marks. */
+  --sheet-clearance: var(--space-8);
+  --mark-size: 0.625rem;
+  --mark-ring: 1.5px;
+
+  /* The Finish screen: the clip, and the confetti's pieces and path. */
+  --clip-size: 10rem;
+  --confetti-size: 0.75rem;
+  --confetti-strip: 0.3rem;
+  --confetti-dot: 0.5rem;
+  --confetti-sway: 0.75rem;
+  /* A piece's box holds its shape however far it sways and turns. */
+  --confetti-room: calc(2 * (var(--confetti-size) + var(--confetti-sway)));
+  --confetti-turn: 1turn;
+  --confetti-from: -1.5rem;
+  /* Where a piece has faded out: above the words on either phone. */
+  --confetti-to: 62vh;
+  --confetti-scatter: 45%;
+  /* Each piece's own fractions, from 0 to 1, set by js/ui/confetti.js. */
+  --piece-x: 0;
+  --piece-y: 0;
+  --piece-pace: 0;
+  --piece-delay: 0;
+  --piece-spin: 0;
 
   /* Drawings */
   --still-size: 4rem;
@@ -113,8 +140,14 @@
   --travel-y: 0;
   --travel-scale: 1;
   --duration-progress: 250ms;
-  --duration-flourish: 1100ms;
-  --delay-flourish: 200ms;
+  /* Confetti: each piece falls for between the fall and the fall plus the
+     spread, the first ones setting off over the stagger, and tumbles back and
+     forth as it goes. The Finish screen is the one place where motion runs
+     on its own for as long as the screen shows. */
+  --duration-confetti-fall: 3.1s;
+  --duration-confetti-spread: 1.9s;
+  --duration-confetti-stagger: 2.5s;
+  --duration-confetti-tumble: 1.1s;
   --duration-loop-beat: 850ms;
   --delay-note-fade: 8s;
   --screen-shift: 0.5rem;
@@ -127,6 +160,15 @@
   --countdown-size: var(--type-144);
   --next-reps-size: var(--type-48);
   --stage-gap: var(--space-5);
+  --total-size: var(--type-24);
+}
+
+/* Narrow phones (iPhone SE, 375 px wide): the total time one step down, so
+   that past an hour it still fits beside the four controls of the top bar. */
+@media (max-width: 380px) {
+  :root {
+    --total-size: var(--type-21);
+  }
 }
 
 /* Short phones (iPhone SE, 667 px tall): the same scale, one step down. */

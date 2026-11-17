@@ -81,6 +81,27 @@ export async function startWorkout(page, workout) {
   await expect(page.locator(".player")).toBeVisible();
 }
 
+// Done and Skip, `sets` times: she is then on set number `sets`, counted from 0.
+export async function doSets(page, sets) {
+  for (let set = 0; set < sets; set += 1) {
+    await doneButton(page).click();
+    await skipButton(page).click();
+  }
+}
+
+// From Start to the Finish screen, skipping every rest.
+export async function finishWorkout(page, workout) {
+  await startWorkout(page, workout);
+  await doSets(page, workout.steps.length - 1);
+  await doneButton(page).click();
+  await expect(heading(page)).toHaveText(COPY.goodJob);
+}
+
+// The plan, opened over the player and closed again.
+export const openPlan = (page) => button(page, COPY.showPlan).click();
+export const closePlan = (page) =>
+  page.getByRole("dialog").getByRole("button", { name: COPY.closePlan, exact: true }).click();
+
 // Nothing may be wider than the phone: no clipped names, no sideways scroll.
 export async function expectNoOverflow(page) {
   const overflowing = await page.evaluate(() => {

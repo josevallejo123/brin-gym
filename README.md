@@ -2,7 +2,7 @@
 
 A workout app for one iPhone. It is a web app added to the Home Screen from Safari: it has its own icon, opens full screen, and works with no signal. There is no sign-in and no account, and nothing leaves the phone.
 
-She picks one of four days (Glutes, Legs, Shoulders and triceps, Back), then one of three variations, and the app walks her through the session one set at a time: the exercise, the set, the reps and timed rests, with a small looping line drawing of each exercise. She can leave the app at any moment, mid-set or mid-rest, and come back to the same place with the right times.
+She picks one of four days (Glutes, Legs, Shoulders and triceps, Back), then one of three variations, and the app walks her through the session one set at a time: the exercise, the set, the reps and timed rests, with a small looping line drawing of each exercise. She can leave the app at any moment, mid-set or mid-rest, and come back to the same place with the right times. During a workout she can open its plan from the top bar to see what is done and what is left, and the Finish screen celebrates the end.
 
 The app is plain HTML, CSS and JavaScript modules. There is no framework and no build step. The only dependency is Playwright, which is used for testing alone.
 
@@ -37,6 +37,7 @@ Her phone picks the new version up the next time she opens the app with signal. 
 app/                    the site: only this folder is published
   data/workouts.json    every workout, rep count and rest length
   art/                  the exercise drawings (CC BY-SA 4.0, see below) and the icon's dumbbell
+  finish/               the Finish screen's clip and its still (not licensed for reuse, see below)
   css/tokens.css        every colour, size and duration
   js/logic/             the workout's order, state and timers; no page code, tested in Node
   js/ui/                the screens; js/ui/copy.js holds every word that is not workout content
@@ -95,5 +96,7 @@ The drawings in `app/art/` are made by script from two open sets, and `tools/con
 They were recoloured and adapted: frames were chosen, resized and redrawn at one line weight, and some machines were removed. `app/art/LICENSE.md` has the full note, and the app's About screen carries the same credit. Anyone who shares or adapts these drawings must give the same credit and keep the same licence.
 
 **Typefaces.** Bodoni Moda and Jost, each under the SIL Open Font License 1.1. Their licence texts are in `app/fonts/`.
+
+**Finish clip.** The clip on the Finish screen and its still (`app/finish/`) are the owner's own and are not licensed for reuse.
 
 **Code.** The app's own code has no open-source licence.

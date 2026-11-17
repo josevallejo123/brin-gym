@@ -13,6 +13,7 @@ import {
   expect,
   heading,
   openApp,
+  openPlan,
   skipButton,
   startWorkout,
   stepLabel,
@@ -207,6 +208,17 @@ test.describe("sounds", () => {
     const notes = await played(page);
     expect(count(notes, "tick")).toBe(0);
     expect(count(notes, "chime")).toBe(0);
+  });
+
+  test("with the plan open, the ticks and the chime still sound", async ({ page }) => {
+    await startWorkout(page, workout);
+    await doneButton(page).click();
+    await openPlan(page);
+    await page.clock.runFor(firstRest + 500);
+    await expect(page.getByRole("dialog")).toBeVisible();
+    const notes = await played(page);
+    expect(count(notes, "tick")).toBe(data.rests.betweenSetsSeconds >= 3 ? 3 : 0);
+    expect(count(notes, "chime")).toBe(1);
   });
 
   test("muted, nothing sounds", async ({ page }) => {

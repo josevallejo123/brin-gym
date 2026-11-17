@@ -10,6 +10,7 @@ import {
   finishText,
   repsText,
   restEndedText,
+  setsDoneText,
   setsSummary,
   stepLabel,
   variationLead,
@@ -99,8 +100,18 @@ test("the away note says how long ago the rest ended, in plain words", () => {
   assert.equal(restEndedText(2 * HOUR + 5 * MINUTE), "Rest ended 2 hours 5 minutes ago");
 });
 
-test("no copy shouts or cheers", () => {
-  const strings = JSON.stringify(COPY);
+// Amended 2026-11-17 at the owner's request: the Finish screen's heading is
+// "Good job!", in his words, and it is the only exception.
+test("no copy shouts or cheers, but the Finish screen's heading", () => {
+  const { goodJob, ...rest } = COPY;
+  assert.equal(goodJob, "Good job!");
+  const strings = JSON.stringify(rest);
   assert.equal(strings.includes("!"), false);
-  assert.equal(/\p{Extended_Pictographic}/u.test(strings), false);
+  assert.equal(/\p{Extended_Pictographic}/u.test(JSON.stringify(COPY)), false);
+});
+
+test("the plan says how far through each exercise she is, in sets or rounds", () => {
+  assert.equal(setsDoneText("main", 2, 4), "2 of 4 sets done");
+  assert.equal(setsDoneText("supersetA", 1, 3), "1 of 3 rounds done");
+  assert.equal(setsDoneText("finisher", 0, 1), "0 of 1 set done");
 });
