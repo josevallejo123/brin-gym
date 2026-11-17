@@ -174,7 +174,8 @@
   color: var(--color-accent);
 }
 
-/* The End workout sheet: the one layer that sits over a screen. */
+/* A sheet: a layer over the player, the End workout question or the plan
+   (whose own rules are in player.css). */
 .sheet {
   width: 100%;
   max-width: var(--content-max);
@@ -201,8 +202,10 @@
   text-wrap: balance;
 }
 
-/* Opening the sheet puts focus on its question, which needs no ring. */
-.sheet-title:focus-visible {
+/* Opening a sheet puts focus on its question, or on the plan's list, which
+   need no ring. */
+.sheet-title:focus-visible,
+.plan-list:focus-visible {
   outline: none;
 }
 

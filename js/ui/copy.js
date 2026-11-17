@@ -1,6 +1,10 @@
 // Every word the app shows that is not workout content. Plain sentence case:
 // no exclamation marks, no cheer. Exercise names, reps and rest lengths come
 // from data/workouts.json; nothing here names an exercise or a number of reps.
+//
+// Amended 2026-11-17 at the owner's request: the Finish screen's heading is
+// "Good job!", in his words. It is the one exclamation mark and the one cheer
+// in the app, and it stays on that screen.
 
 import { formatElapsed } from "../logic/format.js";
 
@@ -8,7 +12,6 @@ export const COPY = {
   appName: "Brin Gym",
   about: "About",
   back: "Back",
-  home: "Home",
   start: "Start",
   done: "Done",
   resume: "Resume",
@@ -19,10 +22,15 @@ export const COPY = {
   stepBack: "Back one set",
   skipRest: "Skip",
   next: "Next",
+  now: "Now",
+  showPlan: "Show the plan",
+  closePlan: "Close",
   endWorkout: "End workout",
   endQuestion: "End this workout?",
   endDetail: "Your place in it will not be kept.",
   continueWorkout: "Continue",
+  goodJob: "Good job!",
+  leaveFinish: "Continue",
   drawings: "Drawings",
   type: "Type",
   typeCredit: "Bodoni Moda and Jost, under the SIL Open Font License.",
@@ -76,14 +84,21 @@ export function stepLabel(step) {
   return `${BLOCK_NAMES[step.block]} · ${unit} ${step.number} of ${step.of}`;
 }
 
+const isSuperset = (block) => block !== "main" && block !== "finisher";
+
 // Sets and reps for one row of the variation list. `entry` is the row's block
 // from sequence.js: how many warm-ups, then how many times through.
 export function setsSummary({ block, warmups, times }, slot) {
-  const isSuperset = block !== "main" && block !== "finisher";
-  const work = `${plural(times, isSuperset ? "round" : "set")} of ${repsText(slot)}`;
+  const work = `${plural(times, isSuperset(block) ? "round" : "set")} of ${repsText(slot)}`;
   if (warmups === 0) return work;
   const warmup = warmups === 1 ? "Warm-up set" : plural(warmups, "warm-up set");
   return `${warmup}, then ${work}`;
+}
+
+// What the marks beside an exercise in the plan say, for assistive
+// technology: "2 of 4 sets done", "1 of 3 rounds done".
+export function setsDoneText(block, done, total) {
+  return `${done} of ${plural(total, isSuperset(block) ? "round" : "set")} done`;
 }
 
 // What comes before a variation's name in its box: "1 · " of "1 · Hip thrust".

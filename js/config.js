@@ -7,6 +7,10 @@ export const CREDITS_URL = "art/credits.json";
 export const VERSION_URL = "version.json";
 export const ART_DIR = "art";
 export const SERVICE_WORKER_URL = "sw.js";
+// The clip on the Finish screen, and the still shown in its place when the
+// phone asks for reduced motion.
+export const FINISH_CLIP_URL = "finish/clip.webp";
+export const FINISH_STILL_URL = "finish/still.webp";
 
 export const STORAGE_KEYS = {
   workout: "brin-gym.workout",
@@ -34,3 +38,6 @@ export const PROGRESS_STEP = 0.001;
 
 // The seconds of a rest countdown that get a quiet tick.
 export const COUNTDOWN_TICKS = [3, 2, 1];
+
+// How many pieces of confetti fall behind the Finish screen at once.
+export const CONFETTI_PIECES = 30;

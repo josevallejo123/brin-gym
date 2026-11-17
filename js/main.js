@@ -96,10 +96,11 @@ function start(data) {
 
   function showFinish() {
     if (showing === "finish") return;
-    const forget = () => {
+    const finish = finishScreen({ elapsedMs: finishedMs, goHome: () => replace(HOME) });
+    show("finish", finish.element, () => {
+      finish.leave();
       finishedMs = null;
-    };
-    show("finish", finishScreen({ elapsedMs: finishedMs, goHome: () => replace(HOME) }), forget);
+    });
   }
 
   function route() {

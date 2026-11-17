@@ -112,45 +112,150 @@
   padding-top: var(--space-4);
 }
 
-/* The line above Start says the list carries on underneath it. */
-.variation .footer-actions {
+/* The line above Start, and above Close in the plan, says the list carries
+   on underneath it. */
+.variation .footer-actions,
+.plan-actions {
   margin-inline: calc(var(--gutter) * -1);
   padding-inline: var(--gutter);
   border-top: var(--hairline) solid var(--color-hairline);
 }
 
-/* A screen with one thing to say sets it in the middle: Finish, and the
-   screen shown when the workouts did not load. */
+/* The screen shown when the workouts did not load has one thing to say, and
+   sets it in the middle. */
 .middle {
   margin-top: auto;
   margin-bottom: auto;
 }
 
-/* Finish: the time, a flourish under it, a way home. */
+/* Finish: confetti falling behind everything, then low on the screen, in
+   thumb reach, the clip, the words and one way on. The top of the screen is
+   left to the confetti, which is gone before it reaches the words. The
+   screen keeps its layers to itself, so the confetti can sit behind the rest. */
+.finish {
+  isolation: isolate;
+}
+
+.finish-words {
+  margin-top: auto;
+  padding-bottom: var(--space-6);
+}
+
+/* The clip's space is kept before it loads, so nothing moves when it does. */
+.finish-clip {
+  display: block;
+  width: var(--clip-size);
+  height: var(--clip-size);
+}
+
+.finish-clip img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-row);
+  object-fit: cover;
+}
+
+.finish-title {
+  margin-top: var(--space-5);
+}
+
 .finish-time {
-  font-size: var(--type-48);
-  line-height: var(--leading-tight);
+  margin-top: var(--space-2);
+  color: var(--color-muted);
+  font-size: var(--type-24);
+  line-height: var(--leading-heading);
 }
 
-.flourish {
-  width: var(--flourish-width);
-  margin-top: var(--space-4);
+/* The confetti: a layer that never takes a tap and never makes the screen
+   scroll. Each piece falls from above the top edge, tumbling and swaying,
+   and has faded out by the end of its fall, where it starts again. js/ui/confetti.js gives every piece its own
+   fractions (--piece-x and the rest), scaled here into the ranges
+   in tokens.css. */
+.confetti {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* A piece's box is wide enough to hold its shape however it sways and turns. */
+.confetti-piece {
+  position: absolute;
+  top: 0;
+  left: calc(var(--piece-x) * (100% - var(--confetti-room)));
+  width: var(--confetti-room);
   color: var(--color-accent);
-  fill: none;
-  stroke: currentColor;
-  stroke-width: var(--flourish-stroke);
-  stroke-linecap: round;
+  animation: confetti-fall calc(var(--duration-confetti-fall) + var(--piece-pace) * var(--duration-confetti-spread)) linear
+    calc(var(--piece-delay) * var(--duration-confetti-stagger)) infinite backwards;
 }
 
-.flourish path {
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-  animation: flourish-draw var(--duration-flourish) var(--ease-in-out) var(--delay-flourish) forwards;
+/* Strips, squares and dots, in turn. */
+.confetti-piece::before {
+  content: "";
+  display: block;
+  width: var(--confetti-size);
+  margin-inline: auto;
+  height: var(--confetti-strip);
+  background-color: currentColor;
+  animation: confetti-tumble calc(var(--duration-confetti-tumble) * (1 + var(--piece-spin))) var(--ease-in-out) infinite alternate;
 }
 
-@keyframes flourish-draw {
+.confetti-piece:not(:nth-child(3n + 1))::before {
+  width: var(--confetti-dot);
+  height: var(--confetti-dot);
+}
+
+.confetti-piece:nth-child(3n)::before {
+  border-radius: var(--radius-pill);
+}
+
+/* Five colours, in a different turn from the shapes, so every shape comes in
+   every colour. */
+.confetti-piece:nth-child(5n + 2) {
+  color: var(--color-confetti-champagne);
+}
+
+.confetti-piece:nth-child(5n + 3) {
+  color: var(--color-confetti-blush);
+}
+
+.confetti-piece:nth-child(5n + 4) {
+  color: var(--color-text);
+}
+
+.confetti-piece:nth-child(5n) {
+  color: var(--color-confetti-lilac);
+}
+
+.confetti[data-paused] .confetti-piece,
+.confetti[data-paused] .confetti-piece::before {
+  animation-play-state: paused;
+}
+
+@keyframes confetti-fall {
+  from {
+    transform: translateY(var(--confetti-from));
+  }
+
+  65% {
+    opacity: 1;
+  }
+
   to {
-    stroke-dashoffset: 0;
+    opacity: 0;
+    transform: translateY(var(--confetti-to));
+  }
+}
+
+@keyframes confetti-tumble {
+  from {
+    transform: translateX(calc(var(--confetti-sway) * -1)) rotate(calc(var(--piece-spin) * var(--confetti-turn))) rotate3d(1, 1, 0, 0turn);
+  }
+
+  to {
+    transform: translateX(var(--confetti-sway)) rotate(calc(var(--piece-spin) * var(--confetti-turn))) rotate3d(1, 1, 0, var(--confetti-turn));
   }
 }
 
@@ -178,9 +283,16 @@
   color: var(--color-muted);
 }
 
+/* With reduced motion on, the confetti lies still, scattered over the top
+   of the screen. */
 @media (prefers-reduced-motion: reduce) {
-  .flourish path {
-    stroke-dashoffset: 0;
+  .confetti-piece {
+    top: calc(var(--piece-y) * var(--confetti-scatter));
     animation: none;
+  }
+
+  .confetti-piece::before {
+    animation: none;
+    transform: rotate(calc(var(--piece-spin) * var(--confetti-turn)));
   }
 }

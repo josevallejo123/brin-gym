@@ -9,14 +9,15 @@
 }
 
 .total {
-  font-size: var(--type-24);
+  font-size: var(--total-size);
   line-height: var(--leading-tight);
   white-space: nowrap;
 }
 
+/* Four controls, each a full tap target: the icons inside them are spaced by
+   the targets themselves. */
 .player-tools {
   display: flex;
-  gap: var(--space-1);
   margin-right: calc(var(--space-3) * -1);
 }
 
@@ -205,6 +206,76 @@
   flex: none;
   min-width: var(--tap-min);
   font-size: var(--type-21);
+}
+
+/* The plan: a second sheet, tall enough to show the whole workout, with the
+   list scrolling between the title and Close. The dialog itself has no
+   padding, so a tap that reaches it is a tap on the dimmed screen. */
+.plan-sheet {
+  max-height: calc(100% - env(safe-area-inset-top) - var(--sheet-clearance));
+  padding: 0;
+  overflow: hidden;
+}
+
+.plan-sheet[open] {
+  display: flex;
+}
+
+.plan-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  padding: 0 calc(env(safe-area-inset-right) + var(--gutter)) calc(env(safe-area-inset-bottom) + var(--space-5))
+    calc(env(safe-area-inset-left) + var(--gutter));
+}
+
+/* The list scrolls right up to the sheet's top edge. */
+.plan-list {
+  padding-top: var(--space-6);
+}
+
+/* What is done steps back into the muted colour; what is current and what is
+   left stay in the main one. */
+.plan-list [data-state="done"] :is(.exercise-name, .drawing) {
+  color: var(--color-muted);
+}
+
+.plan-marks {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+.plan-dots {
+  display: flex;
+  gap: var(--space-2);
+}
+
+/* One mark per set, filled like a progress line: rose gold once done, a
+   rose-gold ring for the one she is at, a quiet ring for the rest. */
+.plan-dot {
+  width: var(--mark-size);
+  height: var(--mark-size);
+  border: var(--mark-ring) solid var(--color-box-line);
+  border-radius: var(--radius-pill);
+}
+
+.plan-dot[data-mark="done"] {
+  border-color: var(--color-accent);
+  background-color: var(--color-accent);
+}
+
+.plan-dot:is([data-mark="now"], [data-mark="next"]) {
+  border-color: var(--color-accent);
+}
+
+.plan-word {
+  color: var(--color-accent);
+  font-size: var(--type-16);
+  line-height: var(--leading-heading);
 }
 
 @media (prefers-reduced-motion: reduce) {

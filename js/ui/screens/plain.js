@@ -1,15 +1,39 @@
 // Finish, About, and the screen shown when the workouts fail to load.
 
+import { FINISH_CLIP_URL, FINISH_STILL_URL } from "../../config.js";
 import { COPY, finishText, versionText } from "../copy.js";
-import { button, el, flourish, topbar } from "../dom.js";
+import { confetti } from "../confetti.js";
+import { button, el, topbar } from "../dom.js";
 
-export function finishScreen({ elapsedMs, goHome }) {
-  return el(
-    "main",
-    { class: "screen" },
-    el("div", { class: "middle" }, el("h1", { class: "finish-time numerals" }, finishText(elapsedMs)), flourish()),
-    el("footer", { class: "footer-actions" }, button(COPY.home, goHome, "button-main")),
+// The clip loops as an animated image, never as a video: a media element
+// would take over the phone's sound and pause her music. With reduced motion
+// on, the browser shows the still in its place.
+const finishClip = () =>
+  el(
+    "picture",
+    { class: "finish-clip" },
+    el("source", { srcset: FINISH_STILL_URL, media: "(prefers-reduced-motion: reduce)" }),
+    el("img", { src: FINISH_CLIP_URL, alt: "" }),
   );
+
+// Confetti behind everything, the clip, the words and one way on. Returns the
+// screen and what to do on leaving it.
+export function finishScreen({ elapsedMs, goHome }) {
+  const falling = confetti();
+  const element = el(
+    "main",
+    { class: "screen finish" },
+    falling.element,
+    el(
+      "div",
+      { class: "finish-words" },
+      finishClip(),
+      el("h1", { class: "screen-title finish-title serif" }, COPY.goodJob),
+      el("p", { class: "finish-time numerals" }, finishText(elapsedMs)),
+    ),
+    el("footer", { class: "footer-actions" }, button(COPY.leaveFinish, goHome, "button-main")),
+  );
+  return { element, leave: falling.stop };
 }
 
 // Links on About leave the app, so they open outside it and pass nothing on.
